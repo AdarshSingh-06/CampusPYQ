@@ -1,0 +1,33 @@
+package com.adarsh.campuspyq.service;
+
+import com.adarsh.campuspyq.entity.Semester;
+import com.adarsh.campuspyq.repository.SemesterRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class SemesterService {
+
+    private final SemesterRepository semesterRepository;
+
+    public SemesterService(SemesterRepository semesterRepository) {
+        this.semesterRepository = semesterRepository;
+    }
+
+    public Semester saveSemester(Semester semester) {
+        return semesterRepository.save(semester);
+    }
+
+    public List<Semester> getAllSemesters() {
+        return semesterRepository.findAll();
+    }
+
+    public Semester getSemesterById(Long id) {
+        return semesterRepository.findById(id).orElse(null);
+    }
+
+    public void deleteSemester(Long id) {
+        semesterRepository.deleteById(id);
+    }
+}
