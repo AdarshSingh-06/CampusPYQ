@@ -8,7 +8,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/pyqs")
-@CrossOrigin("*")
+
 public class PyqController {
 
     private final PyqService pyqService;

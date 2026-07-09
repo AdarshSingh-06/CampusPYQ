@@ -8,7 +8,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/semesters")
-@CrossOrigin("*")
+
 public class SemesterController {
 
     private final SemesterService semesterService;
