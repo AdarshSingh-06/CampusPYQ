@@ -3,6 +3,8 @@ package com.adarsh.campuspyq.service.storage;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 
 import java.io.IOException;
 import java.nio.file.*;
@@ -37,4 +39,23 @@ public class StorageServiceImpl implements StorageService {
             throw new RuntimeException("Could not store file", e);
         }
     }
+    @Override
+public Resource loadFile(String fileName) {
+
+    try {
+
+        Path path = Paths.get(uploadDir).resolve(fileName);
+
+        Resource resource = new org.springframework.core.io.UrlResource(path.toUri());
+
+        if (resource.exists() && resource.isReadable()) {
+            return resource;
+        }
+
+        throw new RuntimeException("File not found");
+
+    } catch (Exception e) {
+        throw new RuntimeException("File not found", e);
+    }
+}
 }

@@ -27,6 +27,11 @@ public class SubjectService {
         return subjectRepository.findById(id).orElse(null);
     }
 
+    public Subject findById(Long id) {
+    return subjectRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Subject not found"));
+}
+
     public void deleteSubject(Long id) {
         subjectRepository.deleteById(id);
     }
