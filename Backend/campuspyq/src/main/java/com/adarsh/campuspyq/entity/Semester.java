@@ -1,8 +1,11 @@
 package com.adarsh.campuspyq.entity;
 
 import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "semesters")
@@ -15,10 +18,12 @@ public class Semester {
     @Column(nullable = false)
     private Integer semesterNumber;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "branch_id", nullable = false)
     private Branch branch;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "semester", cascade = CascadeType.ALL)
     private List<Subject> subjects = new ArrayList<>();
 

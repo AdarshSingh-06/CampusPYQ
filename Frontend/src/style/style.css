@@ -1,0 +1,320 @@
+/* ===========================
+   GLOBAL RESET
+=========================== */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+font-family:"Poppins",sans-serif;
+background:#f6f9ff;
+color:#1e293b;
+overflow-x:hidden;
+}
+
+a{
+text-decoration:none;
+color:inherit;
+}
+
+button{
+font-family:inherit;
+cursor:pointer;
+border:none;
+outline:none;
+}
+
+img{
+max-width:100%;
+display:block;
+}
+
+/* ===========================
+   PAGE
+=========================== */
+
+.page{
+width:90%;
+max-width:1300px;
+margin:auto;
+padding:60px 0;
+}
+
+/* ===========================
+   CONTAINER
+=========================== */
+
+.container{
+width:90%;
+max-width:1300px;
+margin:auto;
+}
+
+/* ===========================
+   TITLES
+=========================== */
+
+h1{
+font-size:52px;
+font-weight:800;
+line-height:1.2;
+color:#0f172a;
+}
+
+h2{
+font-size:36px;
+font-weight:700;
+}
+
+h3{
+font-size:24px;
+font-weight:600;
+}
+
+p{
+font-size:17px;
+line-height:1.8;
+color:#64748b;
+}
+
+/* ===========================
+   BUTTON
+=========================== */
+
+.btn{
+display:inline-flex;
+align-items:center;
+gap:10px;
+padding:15px 34px;
+border-radius:14px;
+background:linear-gradient(135deg,#2563eb,#7c3aed);
+color:white;
+font-weight:600;
+font-size:16px;
+transition:.35s;
+box-shadow:0 18px 40px rgba(37,99,235,.25);
+}
+
+.btn:hover{
+
+transform:translateY(-6px);
+
+box-shadow:0 30px 60px rgba(37,99,235,.35);
+
+}
+
+/* ===========================
+   INPUT
+=========================== */
+
+input,
+select{
+
+width:100%;
+
+padding:16px 18px;
+
+border-radius:14px;
+
+border:2px solid #e2e8f0;
+
+font-size:16px;
+
+transition:.3s;
+
+background:white;
+
+}
+
+input:focus,
+select:focus{
+
+border-color:#2563eb;
+
+box-shadow:0 0 0 5px rgba(37,99,235,.12);
+
+outline:none;
+
+}
+
+/* ===========================
+   CARD
+=========================== */
+
+.card{
+
+background:white;
+
+border-radius:22px;
+
+padding:28px;
+
+box-shadow:0 12px 35px rgba(15,23,42,.08);
+
+transition:.35s;
+
+}
+
+.card:hover{
+
+transform:translateY(-8px);
+
+box-shadow:0 25px 60px rgba(37,99,235,.15);
+
+}
+
+/* ===========================
+   SEARCH
+=========================== */
+
+.search-box{
+
+position:relative;
+
+margin:35px 0;
+
+}
+
+.search-box input{
+
+padding-left:58px;
+
+}
+
+.search-icon{
+
+position:absolute;
+
+top:50%;
+
+left:22px;
+
+transform:translateY(-50%);
+
+font-size:20px;
+
+color:#2563eb;
+
+}
+
+/* ===========================
+   SCROLLBAR
+=========================== */
+
+::-webkit-scrollbar{
+
+width:10px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+background:linear-gradient(#2563eb,#7c3aed);
+
+border-radius:30px;
+
+}
+
+::-webkit-scrollbar-track{
+
+background:#edf2ff;
+
+}
+/* ==========================
+        PREMIUM BUTTONS
+========================== */
+
+button{
+
+border:none;
+
+outline:none;
+
+cursor:pointer;
+
+padding:14px 28px;
+
+border-radius:14px;
+
+font-size:16px;
+
+font-weight:600;
+
+transition:.35s;
+
+}
+
+button:hover{
+
+transform:translateY(-4px);
+
+}
+
+.primary-btn{
+
+background:linear-gradient(135deg,#2563eb,#7c3aed);
+
+color:white;
+
+box-shadow:0 10px 25px rgba(37,99,235,.30);
+
+}
+
+.primary-btn:hover{
+
+box-shadow:0 18px 35px rgba(37,99,235,.40);
+
+}
+
+.delete-btn{
+
+background:linear-gradient(135deg,#ef4444,#dc2626);
+
+color:white;
+
+box-shadow:0 10px 25px rgba(239,68,68,.30);
+
+}
+
+.delete-btn:hover{
+
+box-shadow:0 18px 35px rgba(239,68,68,.40);
+
+}
+
+.login-btn{
+
+background:linear-gradient(135deg,#0ea5e9,#2563eb);
+
+color:white;
+
+box-shadow:0 10px 25px rgba(14,165,233,.35);
+
+}
+
+.login-btn:hover{
+
+box-shadow:0 18px 35px rgba(14,165,233,.45);
+
+}
+
+.logout-btn{
+
+background:linear-gradient(135deg,#f97316,#ea580c);
+
+color:white;
+
+}
+
+.logout-btn:hover{
+
+box-shadow:0 18px 35px rgba(249,115,22,.35);
+
+}

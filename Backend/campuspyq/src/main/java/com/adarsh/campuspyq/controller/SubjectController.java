@@ -8,7 +8,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/subjects")
-
+@CrossOrigin(origins = {
+        "http://localhost:3000",
+        "http://localhost:5173"
+})
 public class SubjectController {
 
     private final SubjectService subjectService;
@@ -27,6 +30,12 @@ public class SubjectController {
         return subjectService.getAllSubjects();
     }
 
+    // NEW API
+    @GetMapping("/semester/{semesterId}")
+    public List<Subject> getSubjectsBySemester(@PathVariable Long semesterId) {
+        return subjectService.getSubjectsBySemester(semesterId);
+    }
+
     @GetMapping("/{id}")
     public Subject getSubject(@PathVariable Long id) {
         return subjectService.getSubjectById(id);
@@ -36,4 +45,4 @@ public class SubjectController {
     public void deleteSubject(@PathVariable Long id) {
         subjectService.deleteSubject(id);
     }
-}
+} 

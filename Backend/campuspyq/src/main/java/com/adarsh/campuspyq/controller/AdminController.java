@@ -1,5 +1,7 @@
 package com.adarsh.campuspyq.controller;
 
+import com.adarsh.campuspyq.dto.LoginRequest;
+import com.adarsh.campuspyq.dto.LoginResponse;
 import com.adarsh.campuspyq.entity.Admin;
 import com.adarsh.campuspyq.service.AdminService;
 import org.springframework.web.bind.annotation.*;
@@ -8,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/admin")
+@CrossOrigin(origins = "http://localhost:5173")
 public class AdminController {
 
     private final AdminService adminService;
@@ -29,5 +32,20 @@ public class AdminController {
     @GetMapping("/{username}")
     public Admin getAdmin(@PathVariable String username) {
         return adminService.getAdminByUsername(username);
+    }
+
+    @PostMapping("/login")
+    public LoginResponse login(@RequestBody LoginRequest request) {
+
+        boolean valid = adminService.validateLogin(
+                request.getUsername(),
+                request.getPassword()
+        );
+
+        if (valid) {
+            return new LoginResponse(true, "Login Successful");
+        }
+
+        return new LoginResponse(false, "Invalid Username or Password");
     }
 }

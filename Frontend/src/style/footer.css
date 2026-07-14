@@ -1,0 +1,89 @@
+/* ===========================
+        PREMIUM FOOTER
+=========================== */
+
+.footer{
+
+margin-top:80px;
+
+background:#0f172a;
+
+padding:60px 8%;
+
+color:white;
+
+text-align:center;
+
+}
+
+.footer h2{
+
+font-size:34px;
+
+margin-bottom:15px;
+
+}
+
+.footer p{
+
+color:#cbd5e1;
+
+font-size:17px;
+
+line-height:30px;
+
+margin-bottom:25px;
+
+}
+
+.footer-links{
+
+display:flex;
+
+justify-content:center;
+
+gap:18px;
+
+flex-wrap:wrap;
+
+margin-top:25px;
+
+}
+
+.footer-links a{
+
+text-decoration:none;
+
+padding:12px 20px;
+
+border-radius:12px;
+
+background:#1e293b;
+
+color:white;
+
+transition:.35s;
+
+}
+
+.footer-links a:hover{
+
+background:linear-gradient(135deg,#2563eb,#7c3aed);
+
+transform:translateY(-4px);
+
+}
+
+.footer-bottom{
+
+margin-top:35px;
+
+padding-top:25px;
+
+border-top:1px solid rgba(255,255,255,.15);
+
+color:#94a3b8;
+
+font-size:15px;
+
+}

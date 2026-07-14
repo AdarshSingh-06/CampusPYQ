@@ -1,6 +1,10 @@
 package com.adarsh.campuspyq.entity;
 
 import jakarta.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,10 +19,12 @@ public class Subject {
     @Column(nullable = false)
     private String subjectName;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "semester_id", nullable = false)
     private Semester semester;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL)
     private List<Pyq> pyqs = new ArrayList<>();
 

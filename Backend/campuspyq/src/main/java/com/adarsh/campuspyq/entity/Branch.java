@@ -1,6 +1,8 @@
 package com.adarsh.campuspyq.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,9 +14,10 @@ public class Branch {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "branch_name", nullable = false, unique = true)
     private String branchName;
 
+     @JsonManagedReference
     @OneToMany(mappedBy = "branch", cascade = CascadeType.ALL)
     private List<Semester> semesters = new ArrayList<>();
 
@@ -28,6 +31,10 @@ public class Branch {
     public Long getId() {
         return id;
     }
+    
+    public void setId(Long id) {
+    this.id = id;
+     }
 
     public String getBranchName() {
         return branchName;

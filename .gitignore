@@ -1,0 +1,20 @@
+# Backend
+Backend/campuspyq/target/
+Backend/campuspyq/uploads/
+
+# Frontend
+Frontend/node_modules/
+Frontend/dist/
+
+# Zip
+*.zip
+
+# VS Code
+.vscode/
+
+# IntelliJ
+.idea/
+
+# Logs
+*.log
+uploads/

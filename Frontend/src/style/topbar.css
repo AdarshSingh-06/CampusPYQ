@@ -1,0 +1,53 @@
+/* ==========================
+        PREMIUM TOPBAR
+========================== */
+
+.topbar{
+
+height:80px;
+
+background:white;
+
+border-radius:20px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+padding:0 35px;
+
+margin-bottom:30px;
+
+box-shadow:0 12px 30px rgba(0,0,0,.08);
+
+}
+
+.topbar h1{
+
+font-size:32px;
+
+font-weight:700;
+
+color:#111827;
+
+}
+
+.topbar::after{
+
+content:"🟢 Online";
+
+background:#dcfce7;
+
+color:#15803d;
+
+padding:8px 18px;
+
+border-radius:30px;
+
+font-weight:700;
+
+font-size:14px;
+
+}

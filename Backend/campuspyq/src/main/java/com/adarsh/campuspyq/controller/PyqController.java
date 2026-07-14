@@ -15,6 +15,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/pyqs")
+@CrossOrigin(origins = {
+        "http://localhost:3000",
+        "http://localhost:5173"
+})
 public class PyqController {
 
     private final PyqService pyqService;
@@ -46,6 +50,12 @@ public class PyqController {
         return pyqService.getAllPyqs();
     }
 
+    // NEW API
+    @GetMapping("/subject/{subjectId}")
+    public List<Pyq> getPyqsBySubject(@PathVariable Long subjectId) {
+        return pyqService.getPyqsBySubjectId(subjectId);
+    }
+
     @GetMapping("/{id}")
     public Pyq getPyq(@PathVariable Long id) {
         return pyqService.getPyqById(id);
@@ -55,7 +65,7 @@ public class PyqController {
     public void deletePyq(@PathVariable Long id) {
         pyqService.deletePyq(id);
     }
-
+ 
     @GetMapping("/download/{id}")
     public ResponseEntity<Resource> downloadFile(@PathVariable Long id) {
 

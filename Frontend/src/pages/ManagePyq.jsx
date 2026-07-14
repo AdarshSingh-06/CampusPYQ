@@ -1,0 +1,340 @@
+import { useEffect, useState } from "react";
+import API from "../services/api";
+import Sidebar from "../components/Sidebar";
+import Topbar from "../components/Topbar";
+import { toast } from "react-toastify";
+
+function ManagePyq() {
+
+    const [branches, setBranches] = useState([]);
+    const [semesters, setSemesters] = useState([]);
+    const [subjects, setSubjects] = useState([]);
+    const [pyqs, setPyqs] = useState([]);
+
+    const [branchId, setBranchId] = useState("");
+    const [semesterId, setSemesterId] = useState("");
+    const [subjectId, setSubjectId] = useState("");
+
+    const [title, setTitle] = useState("");
+    const [year, setYear] = useState("");
+    const [file, setFile] = useState(null);
+
+    useEffect(() => {
+        loadBranches();
+    }, []);
+
+    const loadBranches = async () => {
+
+        const res = await API.get("/branches");
+
+        setBranches(res.data);
+
+    };
+
+    const loadSemesters = async (id) => {
+
+        const res = await API.get(`/branches/${id}/semesters`);
+
+        setSemesters(res.data);
+
+        setSubjects([]);
+
+        setPyqs([]);
+
+    };
+
+    const loadSubjects = async (id) => {
+
+        const res = await API.get(`/subjects/semester/${id}`);
+
+        setSubjects(res.data);
+
+        setPyqs([]);
+
+    };
+
+    const loadPyqs = async (id) => {
+
+        const res = await API.get(`/pyqs/subject/${id}`);
+
+        setPyqs(res.data);
+
+    };
+     
+    const uploadPyq = async () => {
+
+    if (subjectId === "") {
+       toast.warning("Select Subject");
+        return;
+    }
+
+    if (title.trim() === "") {
+       toast.warning("Enter Paper Title");
+        return;
+    }
+
+    if (year === "") {
+       toast.warning("Enter Year");
+        return;
+    }
+
+    if (!file) {
+     toast.warning("Please Select PDF");
+        return;
+    }
+
+    try {
+
+        const formData = new FormData();
+
+        formData.append("title", title);
+        formData.append("year", year);
+        formData.append("subjectId", subjectId);
+        formData.append("file", file);
+
+        await API.post("/pyqs/upload", formData, {
+
+            headers: {
+
+                "Content-Type": "multipart/form-data"
+
+            }
+
+        });
+
+      toast.success("PYQ Uploaded Successfully");
+
+        setTitle("");
+        setYear("");
+        setFile(null);
+
+        loadPyqs(subjectId);
+
+    }
+
+    catch (err) {
+
+        console.log(err);
+
+       toast.error("Upload Failed");
+
+    }
+
+};
+
+const deletePyq = async (id) => {
+
+    if (!window.confirm("Delete this PYQ?"))
+        return;
+
+    try {
+
+        await API.delete(`/pyqs/${id}`);
+
+       toast.success("PYQ Deleted Successfully");
+
+        loadPyqs(subjectId);
+
+    }
+
+    catch (err) {
+
+        console.log(err);
+
+    }
+
+};
+
+    return (
+
+<div className="admin-container">
+
+<Sidebar/>
+
+<div className="content">
+
+<Topbar/>
+
+<div className="card">
+
+<h2>Manage PYQ</h2>
+
+<select
+value={branchId}
+onChange={(e)=>{
+
+setBranchId(e.target.value);
+
+loadSemesters(e.target.value);
+
+}}
+>
+
+<option value="">Select Branch</option>
+
+{
+branches.map(branch=>(
+
+<option
+key={branch.id}
+value={branch.id}
+>
+
+{branch.branchName}
+
+</option>
+
+))
+}
+
+</select>
+
+<br/><br/>
+
+<select
+value={semesterId}
+onChange={(e)=>{
+
+setSemesterId(e.target.value);
+
+loadSubjects(e.target.value);
+
+}}
+>
+
+<option value="">Select Semester</option>
+
+{
+semesters.map(semester=>(
+
+<option
+key={semester.id}
+value={semester.id}
+>
+
+Semester {semester.semesterNumber}
+
+</option>
+
+))
+}
+
+</select>
+
+<br/><br/>
+
+<select
+value={subjectId}
+onChange={(e)=>{
+
+setSubjectId(e.target.value);
+
+loadPyqs(e.target.value);
+
+}}
+>
+
+<option value="">Select Subject</option>
+
+{
+subjects.map(subject=>(
+
+<option
+key={subject.id}
+value={subject.id}
+>
+
+{subject.subjectName}
+
+</option>
+
+))
+}
+
+</select>
+
+<br/><br/>
+
+<input
+placeholder="Paper Title"
+value={title}
+onChange={(e)=>setTitle(e.target.value)}
+/>
+
+<br/><br/>
+
+<input
+type="number"
+placeholder="Year"
+value={year}
+onChange={(e)=>setYear(e.target.value)}
+/>
+
+<br/><br/>
+
+<input
+type="file"
+accept=".pdf"
+onChange={(e)=>setFile(e.target.files[0])}
+/>
+
+<br/><br/>
+<button onClick={uploadPyq}>
+
+    Upload PYQ
+
+</button>
+
+</div>
+
+<br/>
+
+{
+    pyqs.map((pyq) => (
+
+        <div className="card" key={pyq.id}>
+
+            <h3>{pyq.title}</h3>
+
+            <p>Year : {pyq.year}</p>
+
+            <br/>
+
+            <a
+                href={`http://localhost:8080/api/pyqs/download/${pyq.id}`}
+                target="_blank"
+                rel="noreferrer"
+            >
+
+                <button>
+
+                    Download
+
+                </button>
+
+            </a>
+
+            &nbsp;&nbsp;
+
+            <button
+                onClick={() => deletePyq(pyq.id)}
+            >
+
+                Delete
+
+            </button>
+
+        </div>
+
+    ))
+}
+
+</div>
+
+</div>
+
+);
+
+}
+
+export default ManagePyq;

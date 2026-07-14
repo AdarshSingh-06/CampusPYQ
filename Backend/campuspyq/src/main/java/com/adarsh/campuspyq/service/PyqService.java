@@ -25,7 +25,6 @@ public class PyqService {
         this.storageService = storageService;
     }
 
-    // NEW METHOD FOR PDF UPLOAD
     public Pyq uploadPyq(UploadPyqRequest request, MultipartFile file) {
 
         Subject subject = subjectService.findById(request.getSubjectId());
@@ -44,13 +43,16 @@ public class PyqService {
         return pyqRepository.save(pyq);
     }
 
-    // OLD METHODS
     public Pyq savePyq(Pyq pyq) {
         return pyqRepository.save(pyq);
     }
 
     public List<Pyq> getAllPyqs() {
         return pyqRepository.findAll();
+    }
+
+    public List<Pyq> getPyqsBySubjectId(Long subjectId) {
+        return pyqRepository.findBySubjectId(subjectId);
     }
 
     public Pyq getPyqById(Long id) {
@@ -60,4 +62,9 @@ public class PyqService {
     public void deletePyq(Long id) {
         pyqRepository.deleteById(id);
     }
+    
+     public List<Pyq> getPyqsBySubject(Long subjectId) {
+    return pyqRepository.findBySubjectId(subjectId);
+    }
+
 }

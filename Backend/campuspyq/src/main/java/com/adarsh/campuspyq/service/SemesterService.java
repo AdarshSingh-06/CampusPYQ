@@ -27,6 +27,10 @@ public class SemesterService {
         return semesterRepository.findById(id).orElse(null);
     }
 
+    public List<Semester> getSemestersByBranch(Long branchId) {
+        return semesterRepository.findByBranchId(branchId);
+    }
+
     public void deleteSemester(Long id) {
         semesterRepository.deleteById(id);
     }

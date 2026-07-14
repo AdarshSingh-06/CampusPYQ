@@ -1,0 +1,113 @@
+/* ===========================
+        PREMIUM NAVBAR
+=========================== */
+
+.navbar{
+
+position:sticky;
+
+top:0;
+
+z-index:999;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:18px 8%;
+
+background:rgba(255,255,255,.82);
+
+backdrop-filter:blur(18px);
+
+box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+border-bottom:1px solid rgba(255,255,255,.4);
+
+}
+
+.logo{
+
+display:flex;
+
+align-items:center;
+
+gap:12px;
+
+text-decoration:none;
+
+font-size:30px;
+
+font-weight:800;
+
+color:#2563eb;
+
+transition:.35s;
+
+}
+
+.logo:hover{
+
+transform:scale(1.05);
+
+}
+
+.nav-links{
+
+display:flex;
+
+align-items:center;
+
+gap:18px;
+
+}
+
+.nav-links a{
+
+text-decoration:none;
+
+padding:12px 22px;
+
+border-radius:14px;
+
+font-weight:600;
+
+color:#374151;
+
+transition:.35s;
+
+}
+
+.nav-links a:hover{
+
+background:linear-gradient(135deg,#2563eb,#7c3aed);
+
+color:white;
+
+transform:translateY(-3px);
+
+box-shadow:0 12px 25px rgba(37,99,235,.25);
+
+}
+
+@media(max-width:768px){
+
+.navbar{
+
+flex-direction:column;
+
+gap:18px;
+
+}
+
+.nav-links{
+
+flex-wrap:wrap;
+
+justify-content:center;
+
+}
+
+}

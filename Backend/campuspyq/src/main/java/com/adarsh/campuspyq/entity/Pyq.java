@@ -2,6 +2,8 @@ package com.adarsh.campuspyq.entity;
 
 import jakarta.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+ 
 @Entity
 @Table(name = "pyqs")
 public class Pyq {
@@ -22,6 +24,7 @@ public class Pyq {
     @Column(nullable = false)
     private String filePath;
 
+     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "subject_id", nullable = false)
     private Subject subject;
