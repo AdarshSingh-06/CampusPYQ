@@ -19,6 +19,10 @@ function ManagePyq() {
     const [year, setYear] = useState("");
     const [file, setFile] = useState(null);
 
+    const [editId, setEditId] = useState(null);
+const [editTitle, setEditTitle] = useState("");
+const [editYear, setEditYear] = useState("");
+
     useEffect(() => {
         loadBranches();
     }, []);
@@ -140,6 +144,44 @@ const deletePyq = async (id) => {
     catch (err) {
 
         console.log(err);
+
+    }
+
+};
+const updatePyq = async () => {
+
+    if (editTitle.trim() === "") {
+        toast.warning("Enter Title");
+        return;
+    }
+
+    if (editYear === "") {
+        toast.warning("Enter Year");
+        return;
+    }
+
+    try {
+
+        await API.put(`/pyqs/${editId}`, {
+
+            title: editTitle,
+            year: editYear
+
+        });
+
+        toast.success("PYQ Updated");
+
+        setEditId(null);
+        setEditTitle("");
+        setEditYear("");
+
+        loadPyqs(subjectId);
+
+    }
+
+    catch {
+
+        toast.error("Update Failed");
 
     }
 
@@ -279,7 +321,9 @@ onChange={(e)=>setFile(e.target.files[0])}
 />
 
 <br/><br/>
-<button onClick={uploadPyq}>
+<button
+className="primary-btn"
+ onClick={uploadPyq}>
 
     Upload PYQ
 
@@ -294,35 +338,103 @@ onChange={(e)=>setFile(e.target.files[0])}
 
         <div className="card" key={pyq.id}>
 
-            <h3>{pyq.title}</h3>
+           {
+editId === pyq.id ?
 
-            <p>Year : {pyq.year}</p>
+<>
 
-            <br/>
+<input
+value={editTitle}
+onChange={(e)=>setEditTitle(e.target.value)}
+placeholder="Paper Title"
+/>
 
-            <a
-                href={`http://localhost:8080/api/pyqs/download/${pyq.id}`}
-                target="_blank"
-                rel="noreferrer"
-            >
+<br/><br/>
 
-                <button>
+<input
+type="number"
+value={editYear}
+onChange={(e)=>setEditYear(e.target.value)}
+placeholder="Year"
+/>
 
-                    Download
+<br/><br/>
 
-                </button>
+<button onClick={updatePyq}>
+Save
+</button>
 
-            </a>
+&nbsp;
 
-            &nbsp;&nbsp;
+<button
+onClick={()=>{
+setEditId(null);
+setEditTitle("");
+setEditYear("");
+}}
+>
+Cancel
+</button>
 
-            <button
-                onClick={() => deletePyq(pyq.id)}
-            >
+</>
 
-                Delete
+:
 
-            </button>
+<>
+
+<h3>{pyq.title}</h3>
+
+<p>Year : {pyq.year}</p>
+
+<br/>
+
+<a
+href={`http://localhost:8080/api/pyqs/view/${pyq.id}`}
+target="_blank"
+rel="noreferrer"
+>
+<button  className="primary-btn">
+View
+</button>
+</a>
+
+&nbsp;
+
+<a
+href={`http://localhost:8080/api/pyqs/download/${pyq.id}`}
+target="_blank"
+rel="noreferrer"
+>
+<button className="primary-btn">
+Download
+</button>
+</a>
+
+&nbsp;
+
+<button
+className="primary-btn"
+onClick={()=>{
+setEditId(pyq.id);
+setEditTitle(pyq.title);
+setEditYear(pyq.year);
+}}
+>
+Edit
+</button>
+
+&nbsp;
+
+<button
+className="delete-btn"
+onClick={()=>deletePyq(pyq.id)}
+>
+Delete
+</button>
+
+</>
+
+}
 
         </div>
 

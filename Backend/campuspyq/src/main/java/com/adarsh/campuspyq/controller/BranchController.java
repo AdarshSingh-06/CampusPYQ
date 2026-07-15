@@ -45,6 +45,12 @@ public class BranchController {
     public List<Semester> getSemestersByBranch(@PathVariable Long branchId) {
         return semesterService.getSemestersByBranch(branchId);
     }
+    @PutMapping("/{id}")
+public Branch updateBranch(@PathVariable Long id,
+                           @RequestBody Branch branch) {
+
+    return branchService.updateBranch(id, branch);
+}
 
     @DeleteMapping("/{id}")
     public void deleteBranch(@PathVariable Long id) {

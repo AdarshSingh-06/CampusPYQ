@@ -11,6 +11,8 @@ function ManageSemester() {
 
   const [branchId, setBranchId] = useState("");
   const [semesterNumber, setSemesterNumber] = useState("");
+  const [editId, setEditId] = useState(null);
+const [editSemester, setEditSemester] = useState("");
 
   useEffect(() => {
     loadBranches();
@@ -77,6 +79,33 @@ function ManageSemester() {
    loadSemesters(branchId);
 
   }
+  const updateSemester = async () => {
+
+    if (!editSemester) {
+        toast.warning("Enter Semester");
+        return;
+    }
+
+    try {
+
+        await API.put(`/semesters/${editId}`, {
+            semesterNumber: editSemester
+        });
+
+        toast.success("Semester Updated");
+
+        setEditId(null);
+        setEditSemester("");
+
+        loadSemesters(branchId);
+
+    } catch {
+
+        toast.error("Update Failed");
+
+    }
+
+};
 
   return (
 
@@ -170,31 +199,78 @@ className="list-card"
 key={semester.id}
 >
 
+{
+editId === semester.id ?
+
+<>
+
+<input
+type="number"
+value={editSemester}
+onChange={(e)=>setEditSemester(e.target.value)}
+/>
+
+<div style={{display:"flex",gap:"10px",marginTop:"10px"}}>
+
+<button
+className="primary-btn"
+onClick={updateSemester}
+>
+Save
+</button>
+
+<button
+className="delete-btn"
+onClick={()=>{
+setEditId(null);
+setEditSemester("");
+}}
+>
+Cancel
+</button>
+
+</div>
+
+</>
+
+:
+
+<>
+
 <h3>
-
 Semester {semester.semesterNumber}
-
 </h3>
 
 <p>
-
 {semester.branch?.branchName}
-
 </p>
 
 <br/>
 
+<div style={{display:"flex",gap:"10px"}}>
+
 <button
-
-className="delete-btn"
-
-onClick={()=>deleteSemester(semester.id)}
-
+className="primary-btn"
+onClick={()=>{
+setEditId(semester.id);
+setEditSemester(semester.semesterNumber);
+}}
 >
-
-Delete
-
+Edit
 </button>
+
+<button
+className="delete-btn"
+onClick={()=>deleteSemester(semester.id)}
+>
+Delete
+</button>
+
+</div>
+
+</>
+
+}
 
 </div>
 

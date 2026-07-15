@@ -49,5 +49,30 @@ public class AdminService {
 
         return passwordEncoder.matches(password, admin.getPassword());
     }
+    public boolean changePassword(String username,
+                              String currentPassword,
+                              String newPassword,
+                              String confirmPassword) {
+
+    Admin admin = adminRepository.findByUsername(username);
+
+    if (admin == null) {
+        return false;
+    }
+
+    if (!passwordEncoder.matches(currentPassword, admin.getPassword())) {
+        return false;
+    }
+
+    if (!newPassword.equals(confirmPassword)) {
+        return false;
+    }
+
+    admin.setPassword(passwordEncoder.encode(newPassword));
+
+    adminRepository.save(admin);
+
+    return true;
+}
 
 }

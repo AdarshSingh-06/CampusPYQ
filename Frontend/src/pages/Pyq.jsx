@@ -102,19 +102,29 @@ filtered.map((pyq) => (
 
 <p><b>Year :</b> {pyq.year}</p>
 
+<div className="pyq-buttons">
+
+<a
+href={`http://localhost:8080/api/pyqs/view/${pyq.id}`}
+target="_blank"
+rel="noreferrer"
+>
+<button className="view-btn">
+👁 View PDF
+</button>
+</a>
+
 <a
 href={`http://localhost:8080/api/pyqs/download/${pyq.id}`}
 target="_blank"
 rel="noreferrer"
 >
-
 <button className="download-btn">
-
-📥 Download PDF
-
+⬇ Download PDF
 </button>
-
 </a>
+
+</div>
 
 </div>
 

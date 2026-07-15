@@ -5,6 +5,7 @@ import {
     FaBook,
     FaFolder,
     FaFilePdf,
+    FaKey,
     FaSignOutAlt
 } from "react-icons/fa";
 
@@ -40,6 +41,9 @@ function Sidebar(){
             <Link to="/manage-pyq">
                 <FaFilePdf/> PYQ
             </Link>
+            <Link to="/change-password">
+    <FaKey/> Change Password
+</Link>
 
             <button
                 className="logout-btn"

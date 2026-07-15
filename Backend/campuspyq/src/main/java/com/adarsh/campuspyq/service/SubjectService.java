@@ -40,4 +40,13 @@ public class SubjectService {
     public void deleteSubject(Long id) {
         subjectRepository.deleteById(id);
     }
+    public Subject updateSubject(Long id, Subject updatedSubject) {
+
+    Subject subject = subjectRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Subject not found"));
+
+    subject.setSubjectName(updatedSubject.getSubjectName());
+
+    return subjectRepository.save(subject);
+}
 }

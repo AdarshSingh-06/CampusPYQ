@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import AnnouncementBar from "./components/AnnouncementBar";
 import { ToastContainer } from "react-toastify";
+import ChangePassword from "./pages/ChangePassword";
 
 import Home from "./pages/Home";
 import Branch from "./pages/Branch";
@@ -88,6 +89,14 @@ path="/manage-pyq"
 element={
 <ProtectedRoute>
 <ManagePyq/>
+</ProtectedRoute>
+}
+/>
+<Route
+path="/change-password"
+element={
+<ProtectedRoute>
+<ChangePassword/>
 </ProtectedRoute>
 }
 />

@@ -30,4 +30,13 @@ public class BranchService {
     public void deleteBranch(Long id) {
         branchRepository.deleteById(id);
     }
+    public Branch updateBranch(Long id, Branch updatedBranch) {
+
+    Branch branch = branchRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Branch not found"));
+
+    branch.setBranchName(updatedBranch.getBranchName());
+
+    return branchRepository.save(branch);
+}
 }

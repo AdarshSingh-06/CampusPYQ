@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 
 import java.io.IOException;
 import java.nio.file.*;
@@ -38,14 +39,21 @@ public class StorageServiceImpl implements StorageService {
             throw new RuntimeException("Could not store file", e);
         }
     }
-    @Override
+   @Override
 public Resource loadFile(String fileName) {
 
     try {
 
         Path path = Paths.get(uploadDir).resolve(fileName);
 
-        Resource resource = new org.springframework.core.io.UrlResource(path.toUri());
+        System.out.println("================================");
+        System.out.println("Upload Dir : " + uploadDir);
+        System.out.println("File Name  : " + fileName);
+        System.out.println("Full Path  : " + path.toAbsolutePath());
+        System.out.println("Exists     : " + Files.exists(path));
+        System.out.println("================================");
+
+        Resource resource = new UrlResource(path.toUri());
 
         if (resource.exists() && resource.isReadable()) {
             return resource;

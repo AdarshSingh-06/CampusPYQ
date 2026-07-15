@@ -34,4 +34,13 @@ public class SemesterService {
     public void deleteSemester(Long id) {
         semesterRepository.deleteById(id);
     }
+    public Semester updateSemester(Long id, Semester updatedSemester) {
+
+    Semester semester = semesterRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Semester not found"));
+
+    semester.setSemesterNumber(updatedSemester.getSemesterNumber());
+
+    return semesterRepository.save(semester);
+}
 }

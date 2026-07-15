@@ -4,7 +4,9 @@ import com.adarsh.campuspyq.dto.LoginRequest;
 import com.adarsh.campuspyq.dto.LoginResponse;
 import com.adarsh.campuspyq.entity.Admin;
 import com.adarsh.campuspyq.service.AdminService;
+import com.adarsh.campuspyq.dto.ChangePasswordRequest;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 
@@ -48,4 +50,21 @@ public class AdminController {
 
         return new LoginResponse(false, "Invalid Username or Password");
     }
+    @PostMapping("/change-password")
+public LoginResponse changePassword(
+        @RequestBody ChangePasswordRequest request) {
+
+    boolean changed = adminService.changePassword(
+            request.getUsername(),
+            request.getCurrentPassword(),
+            request.getNewPassword(),
+            request.getConfirmPassword()
+    );
+
+    if (changed) {
+        return new LoginResponse(true, "Password Changed Successfully");
+    }
+
+    return new LoginResponse(false, "Current Password is Incorrect or New Password does not match.");
+}
 }

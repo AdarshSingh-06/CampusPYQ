@@ -8,6 +8,8 @@ function ManageBranch(){
 
 const[branches,setBranches]=useState([]);
 const[branchName,setBranchName]=useState("");
+const [editId, setEditId] = useState(null);
+const [editName, setEditName] = useState("");
 
 const loadBranches=async()=>{
 
@@ -74,6 +76,33 @@ toast.success("Deleted");
 loadBranches();
 
 };
+const updateBranch = async () => {
+
+    if (editName.trim() === "") {
+        toast.warning("Enter Branch Name");
+        return;
+    }
+
+    try {
+
+        await API.put(`/branches/${editId}`, {
+            branchName: editName
+        });
+
+        toast.success("Branch Updated");
+
+        setEditId(null);
+        setEditName("");
+
+        loadBranches();
+
+    } catch {
+
+        toast.error("Update Failed");
+
+    }
+
+};
 
 return(
 
@@ -135,23 +164,71 @@ key={branch.id}
 
 >
 
-<h3>
+{
+editId === branch.id ?
 
-📚 {branch.branchName}
+<>
 
-</h3>
+<input
+value={editName}
+onChange={(e)=>setEditName(e.target.value)}
+/>
+
+<div style={{display:"flex",gap:"10px",marginTop:"10px"}}>
 
 <button
-
-className="delete-btn"
-
-onClick={()=>deleteBranch(branch.id)}
-
+className="primary-btn"
+onClick={updateBranch}
 >
-
-Delete
-
+Save
 </button>
+
+<button
+className="delete-btn"
+onClick={()=>{
+setEditId(null);
+setEditName("");
+}}
+>
+Cancel
+</button>
+
+</div>
+
+</>
+
+:
+
+<>
+
+<h3>
+📚 {branch.branchName}
+</h3>
+
+<div style={{display:"flex",gap:"10px"}}>
+
+<button
+className="primary-btn"
+onClick={()=>{
+setEditId(branch.id);
+setEditName(branch.branchName);
+}}
+>
+Edit
+</button>
+
+<button
+className="delete-btn"
+onClick={()=>deleteBranch(branch.id)}
+>
+Delete
+</button>
+
+</div>
+
+</>
+
+}
 
 </div>
 

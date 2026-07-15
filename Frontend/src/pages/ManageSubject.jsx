@@ -13,6 +13,8 @@ function ManageSubject() {
     const [branchId, setBranchId] = useState("");
     const [semesterId, setSemesterId] = useState("");
     const [subjectName, setSubjectName] = useState("");
+    const [editId, setEditId] = useState(null);
+const [editSubject, setEditSubject] = useState("");
 
     useEffect(() => {
         loadBranches();
@@ -125,6 +127,38 @@ function ManageSubject() {
         }
 
     };
+    const updateSubject = async () => {
+
+    if (editSubject.trim() === "") {
+
+        toast.warning("Enter Subject Name");
+
+        return;
+
+    }
+
+    try {
+
+        await API.put(`/subjects/${editId}`, {
+
+            subjectName: editSubject
+
+        });
+
+        toast.success("Subject Updated");
+
+        setEditId(null);
+        setEditSubject("");
+
+        loadSubjects(semesterId);
+
+    } catch {
+
+        toast.error("Update Failed");
+
+    }
+
+};
 
     return (
 
@@ -236,7 +270,9 @@ function ManageSubject() {
 
                     <br /><br />
 
-                    <button onClick={addSubject}>
+                    <button
+                    className="primary-btn"
+                    onClick={addSubject}>
 
                         Add Subject
 
@@ -258,25 +294,65 @@ function ManageSubject() {
 
                         >
 
-                            <h3>
+                            {
+editId === subject.id ?
 
-                                {subject.subjectName}
+<>
 
-                            </h3>
+<input
+value={editSubject}
+onChange={(e)=>setEditSubject(e.target.value)}
+/>
 
-                            <button
+<br/><br/>
 
-                                onClick={() =>
+<button
+className="primary-btn"
+onClick={updateSubject}>
+Save
+</button>
 
-                                    deleteSubject(subject.id)
+<button
+onClick={()=>{
+setEditId(null);
+setEditSubject("");
+}}
+style={{marginLeft:"10px"}}
+>
+Cancel
+</button>
 
-                                }
+</>
 
-                            >
+:
 
-                                Delete
+<>
 
-                            </button>
+<h3>
+{subject.subjectName}
+</h3>
+
+<button
+className="primary-btn"
+onClick={()=>{
+setEditId(subject.id);
+setEditSubject(subject.subjectName);
+}}
+>
+Edit
+</button>
+
+<button
+className="delete-btn"
+onClick={()=>deleteSubject(subject.id)}
+style={{marginLeft:"10px"}}
+>
+Delete
+</button>
+
+</>
+
+}
 
                         </div>
 

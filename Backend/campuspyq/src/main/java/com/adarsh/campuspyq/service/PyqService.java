@@ -66,5 +66,15 @@ public class PyqService {
      public List<Pyq> getPyqsBySubject(Long subjectId) {
     return pyqRepository.findBySubjectId(subjectId);
     }
+    public Pyq updatePyq(Long id, Pyq updatedPyq) {
+
+    Pyq pyq = pyqRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("PYQ not found"));
+
+    pyq.setTitle(updatedPyq.getTitle());
+    pyq.setYear(updatedPyq.getYear());
+
+    return pyqRepository.save(pyq);
+}
 
 }

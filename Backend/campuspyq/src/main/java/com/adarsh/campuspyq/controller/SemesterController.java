@@ -62,6 +62,12 @@ public List<Semester> getSemestersByBranch(@PathVariable Long branchId) {
     public List<Subject> getSubjectsBySemester(@PathVariable Long semesterId) {
         return subjectService.getSubjectsBySemester(semesterId);
     }
+    @PutMapping("/{id}")
+public Semester updateSemester(@PathVariable Long id,
+                               @RequestBody Semester semester) {
+
+    return semesterService.updateSemester(id, semester);
+}
 
     @DeleteMapping("/{id}")
     public void deleteSemester(@PathVariable Long id) {

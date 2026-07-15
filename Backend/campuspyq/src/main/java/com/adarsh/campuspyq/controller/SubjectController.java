@@ -40,6 +40,12 @@ public class SubjectController {
     public Subject getSubject(@PathVariable Long id) {
         return subjectService.getSubjectById(id);
     }
+    @PutMapping("/{id}")
+public Subject updateSubject(@PathVariable Long id,
+                             @RequestBody Subject subject) {
+
+    return subjectService.updateSubject(id, subject);
+}
 
     @DeleteMapping("/{id}")
     public void deleteSubject(@PathVariable Long id) {

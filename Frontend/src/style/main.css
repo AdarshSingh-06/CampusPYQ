@@ -458,3 +458,38 @@ transform:translateY(-10px);
 }
 
 }
+.pyq-buttons{
+display:flex;
+gap:15px;
+margin-top:15px;
+}
+
+.view-btn{
+background:#2563eb;
+color:white;
+padding:10px 18px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+transition:.3s;
+}
+
+.view-btn:hover{
+background:#1d4ed8;
+transform:translateY(-3px);
+}
+
+.download-btn{
+background:#16a34a;
+color:white;
+padding:10px 18px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+transition:.3s;
+}
+
+.download-btn:hover{
+background:#15803d;
+transform:translateY(-3px);
+}
