@@ -1,142 +1,149 @@
-import {useEffect,useState} from "react";
-import {useParams} from "react-router-dom";
-import {FaSearch} from "react-icons/fa";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { FaSearch } from "react-icons/fa";
 import API from "../services/api";
 
-function Pyq(){
+function Pyq() {
 
-const {subjectId}=useParams();
+  const { subjectId } = useParams();
 
-const [pyqs,setPyqs]=useState([]);
-const [search,setSearch]=useState("");
-const [year,setYear]=useState("All");
+  const [pyqs, setPyqs] = useState([]);
+  const [search, setSearch] = useState("");
+  const [year, setYear] = useState("All");
 
-useEffect(()=>{
+  // Railway Backend URL
+  const BACKEND_URL = "https://campuspyq-production.up.railway.app";
 
-API.get(`/pyqs/subject/${subjectId}`)
-.then(res=>setPyqs(res.data))
-.catch(console.log);
+  useEffect(() => {
 
-},[subjectId]);
+    API.get(`/pyqs/subject/${subjectId}`)
+      .then(res => setPyqs(res.data))
+      .catch(console.log);
 
-const years=[...new Set(pyqs.map(p=>p.year))];
+  }, [subjectId]);
 
-const filtered=pyqs.filter(pyq=>{
+  const years = [...new Set(pyqs.map(p => p.year))];
 
-const matchTitle=pyq.title.toLowerCase().includes(search.toLowerCase());
+  const filtered = pyqs.filter(pyq => {
 
-const matchYear=year==="All" || pyq.year===parseInt(year);
+    const matchTitle = pyq.title.toLowerCase().includes(search.toLowerCase());
 
-return matchTitle && matchYear;
+    const matchYear =
+      year === "All" || pyq.year === parseInt(year);
 
-});
+    return matchTitle && matchYear;
 
-return(
+  });
 
-<div className="page">
+  return (
 
-<h1>📄 Previous Year Papers</h1>
+    <div className="page">
 
-<div className="search-box">
+      <h1>📄 Previous Year Papers</h1>
 
-<FaSearch className="search-icon"/>
+      <div className="search-box">
 
-<input
-placeholder="Search Paper..."
-value={search}
-onChange={(e)=>setSearch(e.target.value)}
-/>
+        <FaSearch className="search-icon" />
 
-</div>
+        <input
+          placeholder="Search Paper..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
 
-<div style={{textAlign:"center",marginBottom:"25px"}}>
+      </div>
 
-<select
-value={year}
-onChange={(e)=>setYear(e.target.value)}
-style={{
-padding:"12px",
-borderRadius:"8px",
-fontSize:"16px"
-}}
->
+      <div
+        style={{
+          textAlign: "center",
+          marginBottom: "25px"
+        }}
+      >
 
-<option>All</option>
+        <select
+          value={year}
+          onChange={(e) => setYear(e.target.value)}
+          style={{
+            padding: "12px",
+            borderRadius: "8px",
+            fontSize: "16px"
+          }}
+        >
 
-{
+          <option>All</option>
 
-years.map(y=>
+          {
+            years.map(y => (
+              <option key={y}>{y}</option>
+            ))
+          }
 
-<option key={y}>{y}</option>
+        </select>
 
-)
+      </div>
 
-}
+      {
 
-</select>
+        filtered.length === 0 ? (
 
-</div>
+          <div className="empty-state">
 
-{
+            <div className="empty-icon">📂</div>
 
-filtered.length === 0 ? (
+            <h2>No Question Papers Available</h2>
 
-<div className="empty-state">
+            <p>Upload Coming Soon...</p>
 
-<div className="empty-icon">📂</div>
+          </div>
 
-<h2>No Question Papers Available</h2>
+        ) : (
 
-<p>Upload Coming Soon...</p>
+          filtered.map((pyq) => (
 
-</div>
+            <div
+              className="card fade"
+              key={pyq.id}
+            >
 
-) : (
+              <h2>{pyq.title}</h2>
 
-filtered.map((pyq) => (
+              <p><b>Year :</b> {pyq.year}</p>
 
-<div className="card fade" key={pyq.id}>
+              <div className="pyq-buttons">
 
-<h2>{pyq.title}</h2>
-<span></span>
+                <a
+                  href={`${BACKEND_URL}/api/pyqs/view/${pyq.id}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <button className="view-btn">
+                    👁 View PDF
+                  </button>
+                </a>
 
-<p><b>Year :</b> {pyq.year}</p>
+                <a
+                  href={`${BACKEND_URL}/api/pyqs/download/${pyq.id}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <button className="download-btn">
+                    ⬇ Download PDF
+                  </button>
+                </a>
 
-<div className="pyq-buttons">
+              </div>
 
-<a
-href={`http://localhost:8080/api/pyqs/view/${pyq.id}`}
-target="_blank"
-rel="noreferrer"
->
-<button className="view-btn">
-👁 View PDF
-</button>
-</a>
+            </div>
 
-<a
-href={`http://localhost:8080/api/pyqs/download/${pyq.id}`}
-target="_blank"
-rel="noreferrer"
->
-<button className="download-btn">
-⬇ Download PDF
-</button>
-</a>
+          ))
 
-</div>
+        )
 
-</div>
+      }
 
-))
+    </div>
 
-)
-
-}
-
-</div>
-
-);
+  );
 
 }
 

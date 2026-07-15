@@ -389,7 +389,7 @@ Cancel
 <br/>
 
 <a
-href={`http://localhost:8080/api/pyqs/view/${pyq.id}`}
+href={`https://campuspyq-production.up.railway.app/api/pyqs/view/${pyq.id}`}
 target="_blank"
 rel="noreferrer"
 >
@@ -401,7 +401,7 @@ View
 &nbsp;
 
 <a
-href={`http://localhost:8080/api/pyqs/download/${pyq.id}`}
+href={`https://campuspyq-production.up.railway.app/api/pyqs/download/${pyq.id}`}
 target="_blank"
 rel="noreferrer"
 >
