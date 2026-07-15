@@ -18,3 +18,4 @@ Frontend/dist/
 # Logs
 *.log
 uploads/
+.vscode/

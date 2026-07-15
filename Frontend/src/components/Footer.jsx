@@ -27,7 +27,9 @@ function Footer() {
 
       <div className="footer-bottom">
 
-        © 2026 Campus PYQ • Made with ❤️ by Adarsh Singh
+        © 2026 Campus PYQ • Made with ❤️ by Adarsh
+        <p>  <b>   Developed by Adarsh Singh </b> </p>
+        
 
       </div>
 
