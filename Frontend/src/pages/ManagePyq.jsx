@@ -6,6 +6,8 @@ import { toast } from "react-toastify";
 
 function ManagePyq() {
 
+    const BACKEND_URL = "https://campuspyq.onrender.com";
+
     const [branches, setBranches] = useState([]);
     const [semesters, setSemesters] = useState([]);
     const [subjects, setSubjects] = useState([]);
@@ -20,432 +22,390 @@ function ManagePyq() {
     const [file, setFile] = useState(null);
 
     const [editId, setEditId] = useState(null);
-const [editTitle, setEditTitle] = useState("");
-const [editYear, setEditYear] = useState("");
+    const [editTitle, setEditTitle] = useState("");
+    const [editYear, setEditYear] = useState("");
 
     useEffect(() => {
         loadBranches();
     }, []);
 
     const loadBranches = async () => {
-
         const res = await API.get("/branches");
-
         setBranches(res.data);
-
     };
 
     const loadSemesters = async (id) => {
-
         const res = await API.get(`/branches/${id}/semesters`);
-
         setSemesters(res.data);
-
         setSubjects([]);
-
         setPyqs([]);
-
     };
 
     const loadSubjects = async (id) => {
-
         const res = await API.get(`/subjects/semester/${id}`);
-
         setSubjects(res.data);
-
         setPyqs([]);
-
     };
 
     const loadPyqs = async (id) => {
-
         const res = await API.get(`/pyqs/subject/${id}`);
-
         setPyqs(res.data);
-
     };
-     
+
     const uploadPyq = async () => {
 
-    if (subjectId === "") {
-       toast.warning("Select Subject");
-        return;
-    }
+        if (subjectId === "") {
+            toast.warning("Select Subject");
+            return;
+        }
 
-    if (title.trim() === "") {
-       toast.warning("Enter Paper Title");
-        return;
-    }
+        if (title.trim() === "") {
+            toast.warning("Enter Paper Title");
+            return;
+        }
 
-    if (year === "") {
-       toast.warning("Enter Year");
-        return;
-    }
+        if (year === "") {
+            toast.warning("Enter Year");
+            return;
+        }
 
-    if (!file) {
-     toast.warning("Please Select PDF");
-        return;
-    }
+        if (!file) {
+            toast.warning("Please Select PDF");
+            return;
+        }
 
-    try {
+        try {
 
-        const formData = new FormData();
+            const formData = new FormData();
 
-        formData.append("title", title);
-        formData.append("year", year);
-        formData.append("subjectId", subjectId);
-        formData.append("file", file);
+            formData.append("title", title);
+            formData.append("year", year);
+            formData.append("subjectId", subjectId);
+            formData.append("file", file);
 
-        await API.post("/pyqs/upload", formData, {
+            await API.post("/pyqs/upload", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                }
+            });
 
-            headers: {
+            toast.success("PYQ Uploaded Successfully");
 
-                "Content-Type": "multipart/form-data"
+            setTitle("");
+            setYear("");
+            setFile(null);
 
-            }
+            loadPyqs(subjectId);
 
-        });
+        } catch (err) {
+            console.log(err);
+            toast.error("Upload Failed");
+        }
 
-      toast.success("PYQ Uploaded Successfully");
+    };
 
-        setTitle("");
-        setYear("");
-        setFile(null);
+    const deletePyq = async (id) => {
 
-        loadPyqs(subjectId);
+        if (!window.confirm("Delete this PYQ?"))
+            return;
 
-    }
+        try {
 
-    catch (err) {
+            await API.delete(`/pyqs/${id}`);
 
-        console.log(err);
+            toast.success("PYQ Deleted Successfully");
 
-       toast.error("Upload Failed");
+            loadPyqs(subjectId);
 
-    }
+        } catch (err) {
 
-};
+            console.log(err);
 
-const deletePyq = async (id) => {
+        }
 
-    if (!window.confirm("Delete this PYQ?"))
-        return;
+    };
 
-    try {
+    const updatePyq = async () => {
 
-        await API.delete(`/pyqs/${id}`);
+        if (editTitle.trim() === "") {
+            toast.warning("Enter Title");
+            return;
+        }
 
-       toast.success("PYQ Deleted Successfully");
+        if (editYear === "") {
+            toast.warning("Enter Year");
+            return;
+        }
 
-        loadPyqs(subjectId);
+        try {
 
-    }
+            await API.put(`/pyqs/${editId}`, {
+                title: editTitle,
+                year: editYear
+            });
 
-    catch (err) {
+            toast.success("PYQ Updated");
 
-        console.log(err);
+            setEditId(null);
+            setEditTitle("");
+            setEditYear("");
 
-    }
+            loadPyqs(subjectId);
 
-};
-const updatePyq = async () => {
+        } catch {
 
-    if (editTitle.trim() === "") {
-        toast.warning("Enter Title");
-        return;
-    }
+            toast.error("Update Failed");
 
-    if (editYear === "") {
-        toast.warning("Enter Year");
-        return;
-    }
+        }
 
-    try {
+    };
+        return (
 
-        await API.put(`/pyqs/${editId}`, {
+        <div className="admin-container">
 
-            title: editTitle,
-            year: editYear
+            <Sidebar />
 
-        });
+            <div className="content">
 
-        toast.success("PYQ Updated");
+                <Topbar />
 
-        setEditId(null);
-        setEditTitle("");
-        setEditYear("");
+                <div className="card">
 
-        loadPyqs(subjectId);
+                    <h2>Manage PYQ</h2>
 
-    }
+                    <select
+                        value={branchId}
+                        onChange={(e) => {
+                            setBranchId(e.target.value);
+                            loadSemesters(e.target.value);
+                        }}
+                    >
+                        <option value="">Select Branch</option>
 
-    catch {
+                        {
+                            branches.map(branch => (
 
-        toast.error("Update Failed");
+                                <option
+                                    key={branch.id}
+                                    value={branch.id}
+                                >
+                                    {branch.branchName}
+                                </option>
 
-    }
+                            ))
+                        }
 
-};
+                    </select>
 
-    return (
+                    <br /><br />
 
-<div className="admin-container">
+                    <select
+                        value={semesterId}
+                        onChange={(e) => {
+                            setSemesterId(e.target.value);
+                            loadSubjects(e.target.value);
+                        }}
+                    >
 
-<Sidebar/>
+                        <option value="">Select Semester</option>
 
-<div className="content">
+                        {
+                            semesters.map(semester => (
 
-<Topbar/>
+                                <option
+                                    key={semester.id}
+                                    value={semester.id}
+                                >
+                                    Semester {semester.semesterNumber}
+                                </option>
 
-<div className="card">
+                            ))
+                        }
 
-<h2>Manage PYQ</h2>
+                    </select>
 
-<select
-value={branchId}
-onChange={(e)=>{
+                    <br /><br />
 
-setBranchId(e.target.value);
+                    <select
+                        value={subjectId}
+                        onChange={(e) => {
+                            setSubjectId(e.target.value);
+                            loadPyqs(e.target.value);
+                        }}
+                    >
 
-loadSemesters(e.target.value);
+                        <option value="">Select Subject</option>
 
-}}
->
+                        {
+                            subjects.map(subject => (
 
-<option value="">Select Branch</option>
+                                <option
+                                    key={subject.id}
+                                    value={subject.id}
+                                >
+                                    {subject.subjectName}
+                                </option>
 
-{
-branches.map(branch=>(
+                            ))
+                        }
 
-<option
-key={branch.id}
-value={branch.id}
->
+                    </select>
 
-{branch.branchName}
+                    <br /><br />
 
-</option>
+                    <input
+                        placeholder="Paper Title"
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                    />
 
-))
-}
+                    <br /><br />
 
-</select>
+                    <input
+                        type="number"
+                        placeholder="Year"
+                        value={year}
+                        onChange={(e) => setYear(e.target.value)}
+                    />
 
-<br/><br/>
+                    <br /><br />
 
-<select
-value={semesterId}
-onChange={(e)=>{
+                    <input
+                        type="file"
+                        accept=".pdf"
+                        onChange={(e) => setFile(e.target.files[0])}
+                    />
 
-setSemesterId(e.target.value);
+                    <br /><br />
 
-loadSubjects(e.target.value);
+                    <button
+                        className="primary-btn"
+                        onClick={uploadPyq}
+                    >
+                        Upload PYQ
+                    </button>
 
-}}
->
+                </div>
 
-<option value="">Select Semester</option>
+                <br />
 
-{
-semesters.map(semester=>(
+                {
+                    pyqs.map((pyq) => (
 
-<option
-key={semester.id}
-value={semester.id}
->
+                        <div className="card" key={pyq.id}>
 
-Semester {semester.semesterNumber}
+                            {
 
-</option>
+                                editId === pyq.id ?
 
-))
-}
+                                    <>
+                                                                  
 
-</select>
+                                        <input
+                                            value={editTitle}
+                                            onChange={(e) => setEditTitle(e.target.value)}
+                                            placeholder="Paper Title"
+                                        />
 
-<br/><br/>
+                                        <br /><br />
 
-<select
-value={subjectId}
-onChange={(e)=>{
+                                        <input
+                                            type="number"
+                                            value={editYear}
+                                            onChange={(e) => setEditYear(e.target.value)}
+                                            placeholder="Year"
+                                        />
 
-setSubjectId(e.target.value);
+                                        <br /><br />
 
-loadPyqs(e.target.value);
+                                        <button
+                                            className="primary-btn"
+                                            onClick={updatePyq}
+                                        >
+                                            Save
+                                        </button>
 
-}}
->
+                                        &nbsp;
 
-<option value="">Select Subject</option>
+                                        <button
+                                            className="delete-btn"
+                                            onClick={() => {
+                                                setEditId(null);
+                                                setEditTitle("");
+                                                setEditYear("");
+                                            }}
+                                        >
+                                            Cancel
+                                        </button>
 
-{
-subjects.map(subject=>(
+                                    </>
 
-<option
-key={subject.id}
-value={subject.id}
->
+                                    :
 
-{subject.subjectName}
+                                    <>
 
-</option>
+                                        <h3>{pyq.title}</h3>
 
-))
-}
+                                        <p>Year : {pyq.year}</p>
 
-</select>
+                                        <br />
 
-<br/><br/>
+                                        <a
+                                            href={`${BACKEND_URL}/api/pyqs/view/${pyq.id}`}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                        >
+                                            <button className="primary-btn">
+                                                View
+                                            </button>
+                                        </a>
 
-<input
-placeholder="Paper Title"
-value={title}
-onChange={(e)=>setTitle(e.target.value)}
-/>
+                                        &nbsp;
 
-<br/><br/>
+                                        <a
+                                            href={`${BACKEND_URL}/api/pyqs/download/${pyq.id}`}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                        >
+                                            <button className="primary-btn">
+                                                Download
+                                            </button>
+                                        </a>
 
-<input
-type="number"
-placeholder="Year"
-value={year}
-onChange={(e)=>setYear(e.target.value)}
-/>
+                                        &nbsp;
 
-<br/><br/>
+                                        <button
+                                            className="primary-btn"
+                                            onClick={() => {
+                                                setEditId(pyq.id);
+                                                setEditTitle(pyq.title);
+                                                setEditYear(pyq.year);
+                                            }}
+                                        >
+                                            Edit
+                                        </button>
 
-<input
-type="file"
-accept=".pdf"
-onChange={(e)=>setFile(e.target.files[0])}
-/>
+                                        &nbsp;
 
-<br/><br/>
-<button
-className="primary-btn"
- onClick={uploadPyq}>
+                                        <button
+                                            className="delete-btn"
+                                            onClick={() => deletePyq(pyq.id)}
+                                        >
+                                            Delete
+                                        </button>
 
-    Upload PYQ
+                                    </>
+                            }
 
-</button>
+                        </div>
 
-</div>
-
-<br/>
-
-{
-    pyqs.map((pyq) => (
-
-        <div className="card" key={pyq.id}>
-
-           {
-editId === pyq.id ?
-
-<>
-
-<input
-value={editTitle}
-onChange={(e)=>setEditTitle(e.target.value)}
-placeholder="Paper Title"
-/>
-
-<br/><br/>
-
-<input
-type="number"
-value={editYear}
-onChange={(e)=>setEditYear(e.target.value)}
-placeholder="Year"
-/>
-
-<br/><br/>
-
-<button onClick={updatePyq}>
-Save
-</button>
-
-&nbsp;
-
-<button
-onClick={()=>{
-setEditId(null);
-setEditTitle("");
-setEditYear("");
-}}
->
-Cancel
-</button>
-
-</>
-
-:
-
-<>
-
-<h3>{pyq.title}</h3>
-
-<p>Year : {pyq.year}</p>
-
-<br/>
-
-<a
-href={`https://campuspyq-production.up.railway.app/api/pyqs/view/${pyq.id}`}
-target="_blank"
-rel="noreferrer"
->
-<button  className="primary-btn">
-View
-</button>
-</a>
-
-&nbsp;
-
-<a
-href={`https://campuspyq-production.up.railway.app/api/pyqs/download/${pyq.id}`}
-target="_blank"
-rel="noreferrer"
->
-<button className="primary-btn">
-Download
-</button>
-</a>
-
-&nbsp;
-
-<button
-className="primary-btn"
-onClick={()=>{
-setEditId(pyq.id);
-setEditTitle(pyq.title);
-setEditYear(pyq.year);
-}}
->
-Edit
-</button>
-
-&nbsp;
-
-<button
-className="delete-btn"
-onClick={()=>deletePyq(pyq.id)}
->
-Delete
-</button>
-
-</>
-
-}
+                    ))
+                }      
+                            </div>
 
         </div>
 
-    ))
-}
-
-</div>
-
-</div>
-
-);
+    );
 
 }
 

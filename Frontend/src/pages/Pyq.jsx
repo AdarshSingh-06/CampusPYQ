@@ -11,8 +11,8 @@ function Pyq() {
   const [search, setSearch] = useState("");
   const [year, setYear] = useState("All");
 
-  // Railway Backend URL
-  const BACKEND_URL = "https://campuspyq-production.up.railway.app";
+  // Render Backend URL
+  const BACKEND_URL = "https://campuspyq.onrender.com";
 
   useEffect(() => {
 
