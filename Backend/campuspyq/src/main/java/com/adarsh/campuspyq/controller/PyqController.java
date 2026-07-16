@@ -75,7 +75,7 @@ public ResponseEntity<Resource> viewFile(@PathVariable Long id) {
         return ResponseEntity.notFound().build();
     }
 
-    Resource resource = storageService.loadFile(pyq.getFileName());
+   Resource resource = storageService.loadFile(pyq.getFilePath());
 
     return ResponseEntity.ok()
             .contentType(MediaType.APPLICATION_PDF)
@@ -92,7 +92,7 @@ public ResponseEntity<Resource> viewFile(@PathVariable Long id) {
             return ResponseEntity.notFound().build();
         }
 
-        Resource resource = storageService.loadFile(pyq.getFileName());
+      Resource resource = storageService.loadFile(pyq.getFilePath());
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION,

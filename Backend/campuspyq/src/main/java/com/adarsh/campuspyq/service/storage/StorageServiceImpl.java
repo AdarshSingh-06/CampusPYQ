@@ -1,68 +1,58 @@
 package com.adarsh.campuspyq.service.storage;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.nio.file.*;
-import java.util.UUID;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Map;
 
 @Service
 public class StorageServiceImpl implements StorageService {
 
-    @Value("${file.upload-dir}")
-    private String uploadDir;
+    private final Cloudinary cloudinary;
+
+    public StorageServiceImpl(Cloudinary cloudinary) {
+        this.cloudinary = cloudinary;
+    }
 
     @Override
-    public String storeFile(MultipartFile file) {
-
-        try {
-
-            Path uploadPath = Paths.get(uploadDir);
-
-            if (!Files.exists(uploadPath)) {
-                Files.createDirectories(uploadPath);
-            }
-
-            String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
-
-            Path filePath = uploadPath.resolve(fileName);
-
-            Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-
-            return fileName;
-
-        } catch (IOException e) {
-            throw new RuntimeException("Could not store file", e);
-        }
-    }
-   @Override
-public Resource loadFile(String fileName) {
+public String storeFile(MultipartFile file) {
 
     try {
 
-        Path path = Paths.get(uploadDir).resolve(fileName);
+        Map uploadResult = cloudinary.uploader().upload(
+                file.getBytes(),
+                ObjectUtils.emptyMap()
+        );
 
-        System.out.println("================================");
-        System.out.println("Upload Dir : " + uploadDir);
-        System.out.println("File Name  : " + fileName);
-        System.out.println("Full Path  : " + path.toAbsolutePath());
-        System.out.println("Exists     : " + Files.exists(path));
-        System.out.println("================================");
-
-        Resource resource = new UrlResource(path.toUri());
-
-        if (resource.exists() && resource.isReadable()) {
-            return resource;
-        }
-
-        throw new RuntimeException("File not found");
+        return uploadResult.get("secure_url").toString();
 
     } catch (Exception e) {
-        throw new RuntimeException("File not found", e);
+
+        throw new RuntimeException("Cloudinary Upload Failed", e);
+
+    }
+}
+  @Override
+public Resource loadFile(String fileUrl) {
+
+    try {
+
+        URL url = new URL(fileUrl);
+
+        return new UrlResource(url);
+
+    } catch (Exception e) {
+
+        throw new RuntimeException("Could not load file", e);
+
     }
 }
 }

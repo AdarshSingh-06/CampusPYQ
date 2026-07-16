@@ -29,7 +29,8 @@ public class PyqService {
 
         Subject subject = subjectService.findById(request.getSubjectId());
 
-        String fileName = storageService.storeFile(file);
+        // Upload PDF to Cloudinary
+        String fileUrl = storageService.storeFile(file);
 
         Pyq pyq = new Pyq();
 
@@ -37,8 +38,9 @@ public class PyqService {
         pyq.setYear(request.getYear());
         pyq.setSubject(subject);
 
-        pyq.setFileName(fileName);
-        pyq.setFilePath("uploads/" + fileName);
+        // Save Cloudinary URL
+        pyq.setFileName(fileUrl);
+        pyq.setFilePath(fileUrl);
 
         return pyqRepository.save(pyq);
     }
@@ -55,6 +57,10 @@ public class PyqService {
         return pyqRepository.findBySubjectId(subjectId);
     }
 
+    public List<Pyq> getPyqsBySubject(Long subjectId) {
+        return pyqRepository.findBySubjectId(subjectId);
+    }
+
     public Pyq getPyqById(Long id) {
         return pyqRepository.findById(id).orElse(null);
     }
@@ -62,19 +68,15 @@ public class PyqService {
     public void deletePyq(Long id) {
         pyqRepository.deleteById(id);
     }
-    
-     public List<Pyq> getPyqsBySubject(Long subjectId) {
-    return pyqRepository.findBySubjectId(subjectId);
-    }
+
     public Pyq updatePyq(Long id, Pyq updatedPyq) {
 
-    Pyq pyq = pyqRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("PYQ not found"));
+        Pyq pyq = pyqRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("PYQ not found"));
 
-    pyq.setTitle(updatedPyq.getTitle());
-    pyq.setYear(updatedPyq.getYear());
+        pyq.setTitle(updatedPyq.getTitle());
+        pyq.setYear(updatedPyq.getYear());
 
-    return pyqRepository.save(pyq);
-}
-
+        return pyqRepository.save(pyq);
+    }
 }
