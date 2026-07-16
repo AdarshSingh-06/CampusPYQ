@@ -4,7 +4,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import AnnouncementBar from "./components/AnnouncementBar";
 import { ToastContainer } from "react-toastify";
-import ChangePassword from "./pages/ChangePassword";
+import ChangePassword from "./pages/changePassword";
 
 import Home from "./pages/Home";
 import Branch from "./pages/Branch";
