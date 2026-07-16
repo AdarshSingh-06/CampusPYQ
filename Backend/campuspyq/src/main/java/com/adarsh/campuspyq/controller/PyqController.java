@@ -16,8 +16,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/pyqs")
 @CrossOrigin(origins = {
-        "http://localhost:3000",
-        "http://localhost:5173"
+    "http://localhost:3000",
+    "http://localhost:5173",
+    "https://campus-pyq.vercel.app"
 })
 public class PyqController {
 
