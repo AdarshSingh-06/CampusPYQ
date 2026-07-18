@@ -130,27 +130,21 @@ function Pyq() {
 
             <div className="pyq-buttons">
 
-             <a
-href={pyq.filePath}
-target="_blank"
-rel="noopener noreferrer"
+           <a
+  href={`${BACKEND_URL}/api/pyqs/view/${pyq.id}`}
+  target="_blank"
+  rel="noopener noreferrer"
 >
-
-<button className="view-btn">
-👁 View PDF
-</button>
-
+  <button className="view-btn">
+    👁 View PDF
+  </button>
 </a>
-  <a
-href={pyq.filePath.replace("/upload/", "/upload/fl_attachment/")}
-target="_blank"
-rel="noopener noreferrer"
+ <a
+  href={`${BACKEND_URL}/api/pyqs/download/${pyq.id}`}
 >
-
-<button className="download-btn">
-⬇ Download PDF
-</button>
-
+  <button className="download-btn">
+    ⬇ Download PDF
+  </button>
 </a>
 
             </div>

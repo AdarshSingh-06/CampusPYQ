@@ -27,10 +27,11 @@ public String storeFile(MultipartFile file) {
 
     try {
 
-      Map uploadResult = cloudinary.uploader().upload(
+     Map uploadResult = cloudinary.uploader().upload(
     file.getBytes(),
     ObjectUtils.asMap(
-        "resource_type", "raw"
+        "resource_type", "raw",
+        "public_id", file.getOriginalFilename()
     )
 );
 
