@@ -11,25 +11,43 @@ function Pyq() {
   const [search, setSearch] = useState("");
   const [year, setYear] = useState("All");
 
-  // Render Backend URL
   const BACKEND_URL = "https://campuspyq.onrender.com";
 
   useEffect(() => {
 
     API.get(`/pyqs/subject/${subjectId}`)
-      .then(res => setPyqs(res.data))
-      .catch(console.log);
+      .then((res) => setPyqs(res.data))
+      .catch(console.error);
 
   }, [subjectId]);
 
-  const years = [...new Set(pyqs.map(p => p.year))];
+  // Download Function
+  const downloadPdf = (id) => {
 
-  const filtered = pyqs.filter(pyq => {
+    const link = document.createElement("a");
 
-    const matchTitle = pyq.title.toLowerCase().includes(search.toLowerCase());
+    link.href = `${BACKEND_URL}/api/pyqs/download/${id}`;
+
+    link.download = "";
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    document.body.removeChild(link);
+
+  };
+
+  const years = [...new Set(pyqs.map((p) => p.year))];
+
+  const filtered = pyqs.filter((pyq) => {
+
+    const matchTitle = pyq.title
+      .toLowerCase()
+      .includes(search.toLowerCase());
 
     const matchYear =
-      year === "All" || pyq.year === parseInt(year);
+      year === "All" || pyq.year === Number(year);
 
     return matchTitle && matchYear;
 
@@ -46,6 +64,7 @@ function Pyq() {
         <FaSearch className="search-icon" />
 
         <input
+          type="text"
           placeholder="Search Paper..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
@@ -56,7 +75,7 @@ function Pyq() {
       <div
         style={{
           textAlign: "center",
-          marginBottom: "25px"
+          marginBottom: "25px",
         }}
       >
 
@@ -66,80 +85,77 @@ function Pyq() {
           style={{
             padding: "12px",
             borderRadius: "8px",
-            fontSize: "16px"
+            fontSize: "16px",
           }}
         >
 
-          <option>All</option>
+          <option value="All">All</option>
 
-          {
-            years.map(y => (
-              <option key={y}>{y}</option>
-            ))
-          }
+          {years.map((y) => (
+            <option key={y} value={y}>
+              {y}
+            </option>
+          ))}
 
         </select>
 
       </div>
 
-      {
+      {filtered.length === 0 ? (
 
-        filtered.length === 0 ? (
+        <div className="empty-state">
 
-          <div className="empty-state">
+          <div className="empty-icon">📂</div>
 
-            <div className="empty-icon">📂</div>
+          <h2>No Question Papers Available</h2>
 
-            <h2>No Question Papers Available</h2>
+          <p>Upload Coming Soon...</p>
 
-            <p>Upload Coming Soon...</p>
+        </div>
 
-          </div>
+      ) : (
 
-        ) : (
+        filtered.map((pyq) => (
 
-          filtered.map((pyq) => (
+          <div
+            className="card fade"
+            key={pyq.id}
+          >
 
-            <div
-              className="card fade"
-              key={pyq.id}
-            >
+            <h2>{pyq.title}</h2>
 
-              <h2>{pyq.title}</h2>
+            <p>
+              <b>Year :</b> {pyq.year}
+            </p>
 
-              <p><b>Year :</b> {pyq.year}</p>
+            <div className="pyq-buttons">
 
-              <div className="pyq-buttons">
+              <a
+                href={`${BACKEND_URL}/api/pyqs/view/${pyq.id}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
 
-                <a
-                  href={`${BACKEND_URL}/api/pyqs/view/${pyq.id}`}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <button className="view-btn">
-                    👁 View PDF
-                  </button>
-                </a>
+                <button className="view-btn">
+                  👁 View PDF
+                </button>
 
-                <a
-                  href={`${BACKEND_URL}/api/pyqs/download/${pyq.id}`}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <button className="download-btn">
-                    ⬇ Download PDF
-                  </button>
-                </a>
+              </a>
 
-              </div>
+              <button
+                className="download-btn"
+                onClick={() => downloadPdf(pyq.id)}
+              >
+                ⬇ Download PDF
+              </button>
 
             </div>
 
-          ))
+          </div>
 
-        )
+        ))
 
-      }
+      )}
 
     </div>
 

@@ -83,22 +83,25 @@ public ResponseEntity<Resource> viewFile(@PathVariable Long id) {
                     "inline; filename=\"" + pyq.getFileName() + "\"")
             .body(resource);
 }
-    @GetMapping("/download/{id}")
-    public ResponseEntity<Resource> downloadFile(@PathVariable Long id) {
+           @GetMapping("/download/{id}")
+public ResponseEntity<Resource> downloadFile(@PathVariable Long id) {
 
-        Pyq pyq = pyqService.getPyqById(id);
+    Pyq pyq = pyqService.getPyqById(id);
 
-        if (pyq == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-      Resource resource = storageService.loadFile(pyq.getFilePath());
-
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION,
-                        "attachment; filename=\"" + pyq.getFileName() + "\"")
-                .body(resource);
+    if (pyq == null) {
+        return ResponseEntity.notFound().build();
     }
+
+    Resource resource = storageService.loadFile(pyq.getFilePath());
+
+    return ResponseEntity.ok()
+            .contentType(MediaType.APPLICATION_PDF)
+            .header(
+                    HttpHeaders.CONTENT_DISPOSITION,
+                    "attachment; filename=\"" + pyq.getTitle() + ".pdf\""
+            )
+            .body(resource);
+}  
     @PutMapping("/{id}")
 public Pyq updatePyq(@PathVariable Long id,
                      @RequestBody Pyq updatedPyq) {

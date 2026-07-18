@@ -91,7 +91,7 @@ const resetCard = () => {
 
             <FaUniversity size={50} />
 
-            <h3>Barkatullah University</h3>
+            <h3> <b>Barkatullah University</b></h3>
 
             <p>Largest Free PYQ Collection</p>
             <div className="floating-icons">
