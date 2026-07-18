@@ -1298,3 +1298,41 @@ opacity:1;
 }
 
 }
+.aurora-bg,
+.blob,
+.grid-bg,
+.sparkles{
+    pointer-events: none;
+}
+
+.hero-left{
+    position: relative;
+    z-index: 999;
+}
+
+.hero-btn{
+    position: relative;
+    z-index: 1000;
+}
+.aurora-bg,
+.blob,
+.grid-bg,
+.sparkles{
+    pointer-events:none;
+}
+
+.hero-left{
+    position:relative;
+    z-index:999;
+}
+
+.hero-btn{
+    position:relative;
+    z-index:1000;
+
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+
+    text-decoration:none;
+}

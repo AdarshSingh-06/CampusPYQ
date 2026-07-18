@@ -70,12 +70,10 @@ const resetCard = () => {
             Semester-wise and Subject-wise in just one click.
           </p>
 
-          <Link to="/branches">
-            <button className="hero-btn">
-              Browse Papers
-              <FaArrowRight />
-            </button>
-          </Link>
+          <Link to="/branches" className="hero-btn">
+    Browse Papers
+    <FaArrowRight />
+</Link>
 
         </div>
 
