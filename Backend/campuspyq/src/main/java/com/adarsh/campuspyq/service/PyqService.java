@@ -25,26 +25,27 @@ public class PyqService {
         this.storageService = storageService;
     }
 
-    public Pyq uploadPyq(UploadPyqRequest request, MultipartFile file) {
+     public Pyq uploadPyq(UploadPyqRequest request, MultipartFile file) {
 
-        Subject subject = subjectService.findById(request.getSubjectId());
+    Subject subject = subjectService.findById(request.getSubjectId());
 
-        // Upload PDF to Cloudinary
-        String fileUrl = storageService.storeFile(file);
+    // Upload PDF to Cloudinary
+    String fileUrl = storageService.storeFile(file);
 
-        Pyq pyq = new Pyq();
+    Pyq pyq = new Pyq();
 
-        pyq.setTitle(request.getTitle());
-        pyq.setYear(request.getYear());
-        pyq.setSubject(subject);
+    pyq.setTitle(request.getTitle());
+    pyq.setYear(request.getYear());
+    pyq.setSubject(subject);
 
-        // Save Cloudinary URL
-        pyq.setFileName(fileUrl);
-        pyq.setFilePath(fileUrl);
+    // Original filename
+    pyq.setFileName(file.getOriginalFilename());
 
-        return pyqRepository.save(pyq);
-    }
+    // Cloudinary URL
+    pyq.setFilePath(fileUrl);
 
+    return pyqRepository.save(pyq);
+}
     public Pyq savePyq(Pyq pyq) {
         return pyqRepository.save(pyq);
     }
