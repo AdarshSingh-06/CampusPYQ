@@ -35,6 +35,8 @@ public String storeFile(MultipartFile file) {
     )
 );
 
+System.out.println("Upload Result = " + uploadResult);
+
 return uploadResult.get("secure_url").toString();
 
     } catch (Exception e) {
