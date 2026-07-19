@@ -22,28 +22,35 @@ public class StorageServiceImpl implements StorageService {
         this.cloudinary = cloudinary;
     }
 
+   
     @Override
 public String storeFile(MultipartFile file) {
 
     try {
-Map uploadResult = cloudinary.uploader().upload(
-    file.getInputStream(),
-    ObjectUtils.asMap(
-        "resource_type", "raw",
-        "use_filename", true,
-        "unique_filename", true,
-        "overwrite", false
-    )
-);
 
-System.out.println(uploadResult);
+        System.out.println("========== UPLOAD START ==========");
+        System.out.println("Original File Name = " + file.getOriginalFilename());
+        System.out.println("Content Type = " + file.getContentType());
+        System.out.println("File Size = " + file.getSize());
 
-return uploadResult.get("secure_url").toString();
+        Map uploadResult = cloudinary.uploader().upload(
+                file.getInputStream(),
+                ObjectUtils.asMap(
+                        "resource_type", "raw",
+                        "use_filename", true,
+                        "unique_filename", true,
+                        "overwrite", false
+                )
+        );
+
+        System.out.println("Upload Result = " + uploadResult);
+        System.out.println("========== UPLOAD END ==========");
+
+        return uploadResult.get("secure_url").toString();
 
     } catch (Exception e) {
-
+        e.printStackTrace();
         throw new RuntimeException("Cloudinary Upload Failed", e);
-
     }
 }
   @Override
