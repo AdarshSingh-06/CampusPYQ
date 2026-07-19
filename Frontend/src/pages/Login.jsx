@@ -20,16 +20,22 @@ function Login() {
                 password
             });
 
-            if (res.data.success) {
+          if (res.data.success) {
 
-               login();
+    console.log("Before login =", sessionStorage.getItem("loggedIn"));
 
-toast.success("Login Successful");
+    login();
 
-const lastPage =
-    sessionStorage.getItem("lastAdminPage") || "/dashboard";
+    console.log("After login =", sessionStorage.getItem("loggedIn"));
 
-navigate(lastPage);
+    toast.success("Login Successful");
+
+    const lastPage =
+        sessionStorage.getItem("lastPage") || "/dashboard";
+
+    navigate(lastPage);
+
+
             } else {
 
               toast.error("Invalid Username or Password");

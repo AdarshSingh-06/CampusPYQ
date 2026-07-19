@@ -64,7 +64,8 @@ gap:18px;
 
 }
 
-.nav-links a{
+.nav-links a,
+.navlinks button{
 
 text-decoration:none;
 
@@ -79,8 +80,46 @@ color:#374151;
 transition:.35s;
 
 }
+.nav-links button{
 
-.nav-links a:hover{
+background:none;
+
+border:none;
+
+text-decoration:none;
+
+padding:12px 22px;
+
+border-radius:14px;
+
+font-weight:600;
+
+font-size:16px;
+
+color:#374151;
+
+cursor:pointer;
+
+transition:.35s;
+
+font-family:inherit;
+
+}
+
+.nav-links button:hover{
+
+background:linear-gradient(135deg,#2563eb,#7c3aed);
+
+color:white;
+
+transform:translateY(-3px);
+
+box-shadow:0 12px 25px rgba(37,99,235,.25);
+
+}
+
+.nav-links a:hover,
+.navlinks button:hover{
 
 background:linear-gradient(135deg,#2563eb,#7c3aed);
 

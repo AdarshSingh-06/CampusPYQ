@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import API from "../services/api";
 import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
 import { toast } from "react-toastify";
-import { useState, useEffect } from "react";
 
 function ManageSubject() {
 useEffect(() => {

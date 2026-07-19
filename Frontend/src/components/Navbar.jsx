@@ -43,19 +43,12 @@ function Navbar() {
           📚 Branches
         </Link>
 
-        <button
-          onClick={handleAdminClick}
-          style={{
-            background: "none",
-            border: "none",
-            color: "white",
-            fontSize: "16px",
-            cursor: "pointer",
-            fontWeight: "500"
-          }}
-        >
-          Admin
-        </button>
+       <button
+  onClick={handleAdminClick}
+  className="admin-link"
+>
+  Admin
+</button>
 
       </div>
 
