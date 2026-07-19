@@ -7,18 +7,26 @@ function Branch() {
 
   const [branches, setBranches] = useState([]);
   const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
 
-  useEffect(() => {
+ useEffect(() => {
+
+    setLoading(true);
+
     API.get("/branches")
-      .then((response) => {
-        setBranches(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
+        .then((response) => {
+            setBranches(response.data);
+        })
+        .catch((error) => {
+            console.error(error);
+        })
+        .finally(() => {
+            setLoading(false);
+        });
+
+}, []);
 
   const filteredBranches = branches.filter((branch) =>
     branch.branchName.toLowerCase().includes(search.toLowerCase())
@@ -42,39 +50,42 @@ function Branch() {
 
       </div>
 
-      {filteredBranches.length === 0 ? (
+{loading ? (
 
-        <p>No Branch Found</p>
+  <div style={{ textAlign: "center", marginTop: "40px" }}>
+    <h3>Loading Branches...</h3>
+  </div>
 
-      ) : (
+) : filteredBranches.length === 0 ? (
 
-        filteredBranches.map((branch) => (
+  <p>No Branch Found</p>
 
-         <div
-key={branch.id}
-className="card branch-card fade"
-            onClick={() =>
-              navigate(`/branches/${branch.id}/semesters`)
-            }
-          >
+) : (
 
-           <div>
+  filteredBranches.map((branch) => (
 
-<h2>{branch.branchName}</h2>
-<span></span>
+    <div
+      key={branch.id}
+      className="card branch-card fade"
+      onClick={() =>
+        navigate(`/branches/${branch.id}/semesters`)
+      }
+    >
 
-<p>View Semester Papers</p>
+      <div>
+        <h2>{branch.branchName}</h2>
+        <span></span>
+        <p>View Semester Papers</p>
+      </div>
 
-</div>
+      <span>📚</span>
 
-<span>📚</span>
+    </div>
 
-          </div>
+  ))
 
-        ))
-
-      )}
-
+)}
+    
     </div>
   );
 }

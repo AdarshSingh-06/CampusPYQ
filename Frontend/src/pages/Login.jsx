@@ -22,12 +22,14 @@ function Login() {
 
             if (res.data.success) {
 
-                login();
+               login();
 
-                toast.success("Login Successful");
+toast.success("Login Successful");
 
-                navigate("/dashboard");
+const lastPage =
+    sessionStorage.getItem("lastAdminPage") || "/dashboard";
 
+navigate(lastPage);
             } else {
 
               toast.error("Invalid Username or Password");

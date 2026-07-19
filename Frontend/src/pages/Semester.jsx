@@ -10,12 +10,22 @@ function Semester() {
 
   const [semesters, setSemesters] = useState([]);
   const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
 
-    API.get(`/branches/${branchId}/semesters`)
-      .then((res) => setSemesters(res.data))
-      .catch(console.log);
+    setLoading(true);
+
+    API.get(`/semesters/branch/${branchId}`)
+      .then((res) => {
+        setSemesters(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
 
   }, [branchId]);
 
@@ -31,33 +41,39 @@ function Semester() {
 
       <div className="search-box">
 
-        <FaSearch className="search-icon"/>
+        <FaSearch className="search-icon" />
 
         <input
           type="text"
           placeholder="Search Semester..."
           value={search}
-          onChange={(e)=>setSearch(e.target.value)}
+          onChange={(e) => setSearch(e.target.value)}
         />
 
       </div>
 
-      {
-        filtered.length===0 ?
+      {loading ? (
+
+        <div style={{ textAlign: "center", marginTop: "40px" }}>
+          <h3>⏳ Loading Semesters...</h3>
+        </div>
+
+      ) : filtered.length === 0 ? (
 
         <p>No Semester Found</p>
 
-        :
+      ) : (
 
-        filtered.map((semester)=>(
+        filtered.map((semester) => (
 
           <div
             className="card fade"
             key={semester.id}
-            onClick={()=>navigate(`/semesters/${semester.id}/subjects`)}
+            onClick={() => navigate(`/semesters/${semester.id}/subjects`)}
           >
 
             <h2>Semester {semester.semesterNumber}</h2>
+
             <span></span>
 
             <p>Click to View Subjects →</p>
@@ -65,7 +81,8 @@ function Semester() {
           </div>
 
         ))
-      }
+
+      )}
 
     </div>
 

@@ -3,8 +3,13 @@ import API from "../services/api";
 import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
 import { toast } from "react-toastify";
+import { useState, useEffect } from "react";
 
 function ManageSemester() {
+
+  useEffect(() => {
+    sessionStorage.setItem("lastPage", "/manage-semester");
+}, []);
 
   const [branches, setBranches] = useState([]);
   const [semesters, setSemesters] = useState([]);

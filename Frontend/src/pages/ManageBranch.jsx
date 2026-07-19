@@ -3,8 +3,12 @@ import API from "../services/api";
 import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
 import { toast } from "react-toastify";
+import { useState, useEffect } from "react";
 
 function ManageBranch(){
+    useEffect(() => {
+    sessionStorage.setItem("lastPage", "/manage-branch");
+}, []);
 
 const[branches,setBranches]=useState([]);
 const[branchName,setBranchName]=useState("");

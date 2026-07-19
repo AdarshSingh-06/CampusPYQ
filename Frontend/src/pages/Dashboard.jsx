@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 import {
   FaCodeBranch,
   FaBook,
@@ -8,6 +9,11 @@ import {
 } from "react-icons/fa";
 
 function Dashboard() {
+
+  useEffect(() => {
+    sessionStorage.setItem("lastPage", "/dashboard");
+  }, []);
+
   return (
     <div className="dashboard-page">
 

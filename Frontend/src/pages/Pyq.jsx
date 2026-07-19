@@ -10,33 +10,26 @@ function Pyq() {
   const [pyqs, setPyqs] = useState([]);
   const [search, setSearch] = useState("");
   const [year, setYear] = useState("All");
+  const [loading, setLoading] = useState(true);
 
   const BACKEND_URL = "https://campuspyq.onrender.com";
 
   useEffect(() => {
 
+    setLoading(true);
+
     API.get(`/pyqs/subject/${subjectId}`)
-      .then((res) => setPyqs(res.data))
-      .catch(console.error);
+      .then((res) => {
+        setPyqs(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
 
   }, [subjectId]);
-
-  // Download Function
-  const downloadPdf = (id) => {
-
-    const link = document.createElement("a");
-
-    link.href = `${BACKEND_URL}/api/pyqs/download/${id}`;
-
-    link.download = "";
-
-    document.body.appendChild(link);
-
-    link.click();
-
-    document.body.removeChild(link);
-
-  };
 
   const years = [...new Set(pyqs.map((p) => p.year))];
 
@@ -101,7 +94,13 @@ function Pyq() {
 
       </div>
 
-      {filtered.length === 0 ? (
+      {loading ? (
+
+        <div style={{ textAlign: "center", marginTop: "40px" }}>
+          <h3>⏳ Loading Question Papers...</h3>
+        </div>
+
+      ) : filtered.length === 0 ? (
 
         <div className="empty-state">
 
@@ -130,22 +129,23 @@ function Pyq() {
 
             <div className="pyq-buttons">
 
-           <a
-  href={`${BACKEND_URL}/api/pyqs/view/${pyq.id}`}
-  target="_blank"
-  rel="noopener noreferrer"
->
-  <button className="view-btn">
-    👁 View PDF
-  </button>
-</a>
- <a
-  href={`${BACKEND_URL}/api/pyqs/download/${pyq.id}`}
->
-  <button className="download-btn">
-    ⬇ Download PDF
-  </button>
-</a>
+              <a
+                href={`${BACKEND_URL}/api/pyqs/view/${pyq.id}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <button className="view-btn">
+                  👁 View PDF
+                </button>
+              </a>
+
+              <a
+                href={`${BACKEND_URL}/api/pyqs/download/${pyq.id}`}
+              >
+                <button className="download-btn">
+                  ⬇ Download PDF
+                </button>
+              </a>
 
             </div>
 

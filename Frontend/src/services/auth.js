@@ -1,17 +1,11 @@
 export const login = () => {
-
-    localStorage.setItem("loggedIn","true");
-
-}
+    sessionStorage.setItem("loggedIn", "true");
+};
 
 export const logout = () => {
-
-    localStorage.removeItem("loggedIn");
-
-}
+    sessionStorage.removeItem("loggedIn");
+};
 
 export const isLoggedIn = () => {
-
-    return localStorage.getItem("loggedIn")==="true";
-
-}
+    return sessionStorage.getItem("loggedIn") === "true";
+};
