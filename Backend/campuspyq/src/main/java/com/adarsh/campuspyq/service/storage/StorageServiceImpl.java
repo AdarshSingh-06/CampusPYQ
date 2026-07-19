@@ -23,7 +23,7 @@ public class StorageServiceImpl implements StorageService {
     }
 
    
-    @Override
+   @Override
 public String storeFile(MultipartFile file) {
 
     try {
@@ -34,7 +34,7 @@ public String storeFile(MultipartFile file) {
         System.out.println("File Size = " + file.getSize());
 
         Map uploadResult = cloudinary.uploader().upload(
-                file.getInputStream(),
+                file.getBytes(),
                 ObjectUtils.asMap(
                         "resource_type", "raw",
                         "use_filename", true,
@@ -53,6 +53,8 @@ public String storeFile(MultipartFile file) {
         throw new RuntimeException("Cloudinary Upload Failed", e);
     }
 }
+   
+   
   @Override
 public Resource loadFile(String fileUrl) {
 
