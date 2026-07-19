@@ -26,16 +26,17 @@ public class StorageServiceImpl implements StorageService {
 public String storeFile(MultipartFile file) {
 
     try {
-
-     Map uploadResult = cloudinary.uploader().upload(
-    file.getBytes(),
+Map uploadResult = cloudinary.uploader().upload(
+    file.getInputStream(),
     ObjectUtils.asMap(
         "resource_type", "raw",
-        "public_id", file.getOriginalFilename()
+        "use_filename", true,
+        "unique_filename", true,
+        "overwrite", false
     )
 );
 
-System.out.println("Upload Result = " + uploadResult);
+System.out.println(uploadResult);
 
 return uploadResult.get("secure_url").toString();
 
