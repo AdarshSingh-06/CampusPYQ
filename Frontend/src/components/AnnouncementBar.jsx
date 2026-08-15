@@ -6,7 +6,7 @@ function AnnouncementBar() {
 
         📢 <strong>HELP US BUILD THE LARGEST BARKATULLAH UNIVERSITY PYQ COLLECTION</strong>
 
-        &nbsp;&nbsp;📚 Have Previous Year Question Papers?
+        &nbsp;&nbsp;📚 Have PYQ 🙌 Send to this Number -
 
         &nbsp;&nbsp;<span className="money">💰 Earn ₹10 for EVERY valid PYQ!</span>
 
@@ -14,7 +14,7 @@ function AnnouncementBar() {
 
         &nbsp;&nbsp;❤️ Help thousands of students & future juniors.
 
-        &nbsp;&nbsp;🚀 Thank you for supporting Campus PYQ!
+        &nbsp;&nbsp;
 
       </div>
 

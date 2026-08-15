@@ -11,7 +11,7 @@ function ManagePyq() {
 }, []);
 
 
-    const BACKEND_URL = "https://campuspyq.onrender.com";
+    const BACKEND_URL = "http://localhost:8080";
 
     const [branches, setBranches] = useState([]);
     const [semesters, setSemesters] = useState([]);

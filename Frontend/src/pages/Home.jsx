@@ -42,7 +42,7 @@ const resetCard = () => {
     <>
       {/* Hero Section */}
        
-       <div style={{height:"80px"}}></div>
+      
 
       <section className="hero">
         <div className="aurora-bg">
@@ -55,8 +55,8 @@ const resetCard = () => {
         <div className="hero-left">
 
           <span className="badge">
-            Barkatullah University
-          </span>
+              <h2> BARKATULLAH UNIVERSITY INSTITUTE   OF TECHNOLOGY  BHOPAL 🎓  </h2>
+</span>
 
           <h1>
             One Place For All
@@ -203,4 +203,4 @@ const resetCard = () => {
   );
 }
 
-export default Home;
+export default Home; 

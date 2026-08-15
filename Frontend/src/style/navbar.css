@@ -1,152 +1,149 @@
-/* ===========================
-        PREMIUM NAVBAR
-=========================== */
+/* =========================================
+   PREMIUM CAMPUS PYQ NAVBAR
+========================================= */
 
-.navbar{
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 9999;
 
-position:sticky;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-top:0;
+    padding: 16px 8%;
 
-z-index:999;
+    background: linear-gradient(
+        135deg,
+        #0f172a,
+        #1e3a8a,
+        #2563eb
+    );
 
-display:flex;
+    box-shadow: 0 8px 25px rgba(15, 23, 42, 0.25);
 
-justify-content:space-between;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 
-align-items:center;
-
-padding:18px 8%;
-
-background:rgba(255,255,255,.82);
-
-backdrop-filter:blur(18px);
-
-box-shadow:0 10px 30px rgba(0,0,0,.08);
-
-border-bottom:1px solid rgba(255,255,255,.4);
-
+    box-sizing: border-box;
 }
 
-.logo{
 
-display:flex;
+/* =========================================
+   LOGO
+========================================= */
 
-align-items:center;
+.logo {
+    display: flex;
+    align-items: center;
 
-gap:12px;
+    gap: 12px;
 
-text-decoration:none;
+    text-decoration: none;
 
-font-size:30px;
+    font-size: 30px;
+    font-weight: 800;
 
-font-weight:800;
+    color: white;
 
-color:#2563eb;
-
-transition:.35s;
-
+    transition: 0.3s ease;
 }
 
-.logo:hover{
-
-transform:scale(1.05);
-
+.logo:hover {
+    transform: scale(1.04);
 }
 
-.nav-links{
 
-display:flex;
+/* =========================================
+   NAVIGATION
+========================================= */
 
-align-items:center;
-
-gap:18px;
-
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
+
+
+/* Links */
 
 .nav-links a,
-.navlinks button{
+.nav-links button {
 
-text-decoration:none;
+    text-decoration: none;
 
-padding:12px 22px;
+    padding: 11px 18px;
 
-border-radius:14px;
+    border-radius: 12px;
 
-font-weight:600;
+    font-weight: 600;
 
-color:#374151;
+    color: #e2e8f0;
 
-transition:.35s;
+    transition: all 0.3s ease;
 
-}
-.nav-links button{
+    border: none;
 
-background:none;
+    background: transparent;
 
-border:none;
+    font-family: inherit;
 
-text-decoration:none;
+    font-size: 16px;
 
-padding:12px 22px;
-
-border-radius:14px;
-
-font-weight:600;
-
-font-size:16px;
-
-color:#374151;
-
-cursor:pointer;
-
-transition:.35s;
-
-font-family:inherit;
-
+    cursor: pointer;
 }
 
-.nav-links button:hover{
 
-background:linear-gradient(135deg,#2563eb,#7c3aed);
-
-color:white;
-
-transform:translateY(-3px);
-
-box-shadow:0 12px 25px rgba(37,99,235,.25);
-
-}
+/* Hover */
 
 .nav-links a:hover,
-.navlinks button:hover{
+.nav-links button:hover {
 
-background:linear-gradient(135deg,#2563eb,#7c3aed);
+    background: rgba(255, 255, 255, 0.15);
 
-color:white;
+    color: white;
 
-transform:translateY(-3px);
+    transform: translateY(-2px);
 
-box-shadow:0 12px 25px rgba(37,99,235,.25);
-
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
-@media(max-width:768px){
 
-.navbar{
+/* =========================================
+   MOBILE
+========================================= */
 
-flex-direction:column;
+@media (max-width: 768px) {
 
-gap:18px;
+    .navbar {
 
-}
+        position: relative;
 
-.nav-links{
+        flex-direction: column;
 
-flex-wrap:wrap;
+        gap: 15px;
 
-justify-content:center;
+        padding: 14px 5%;
+    }
 
-}
+    .logo {
 
+        font-size: 25px;
+    }
+
+    .nav-links {
+
+        flex-wrap: wrap;
+
+        justify-content: center;
+
+        gap: 6px;
+    }
+
+    .nav-links a,
+    .nav-links button {
+
+        padding: 9px 13px;
+
+        font-size: 14px;
+    }
 }
