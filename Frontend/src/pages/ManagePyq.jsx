@@ -88,11 +88,8 @@ function ManagePyq() {
             formData.append("subjectId", subjectId);
             formData.append("file", file);
 
-            await API.post("/pyqs/upload", formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data"
-                }
-            });
+            await API.post("/pyqs/upload", formData ); 
+               
 
             toast.success("PYQ Uploaded Successfully");
 
