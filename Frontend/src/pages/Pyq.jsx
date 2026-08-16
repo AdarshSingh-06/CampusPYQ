@@ -12,7 +12,7 @@ function Pyq() {
   const [year, setYear] = useState("All");
   const [loading, setLoading] = useState(true);
 
-  const BACKEND_URL = "http://localhost:8080";
+  const BACKEND_URL = "https://campuspyq-1.onrender.com";
 
   useEffect(() => {
 
