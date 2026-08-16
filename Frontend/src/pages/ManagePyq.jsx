@@ -100,11 +100,16 @@ function ManagePyq() {
             loadPyqs(subjectId);
 
         } catch (err) {
-            console.log(err);
-            toast.error("Upload Failed");
+
+        console.error("Upload Error:", err);
+
+        if (err.response) {
+            console.error("Server:", err.response.data);
         }
 
-    };
+        toast.error("Upload Failed");
+    }
+};
 
     const deletePyq = async (id) => {
 

@@ -29,28 +29,24 @@ public class PyqController {
         this.pyqService = pyqService;
         this.storageService = storageService;
     }
-
+    
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public Pyq uploadPyq(
-            @RequestParam("title") String title,
-            @RequestParam("year") Integer year,
-            @RequestParam("subjectId") Long subjectId,
-            @RequestParam("file") MultipartFile file
-    ) {
+public Pyq uploadPyq(
+        @RequestPart("title") String title,
+        @RequestPart("year") String year,
+        @RequestPart("subjectId") String subjectId,
+        @RequestPart("file") MultipartFile file
+) {
 
-        UploadPyqRequest request = new UploadPyqRequest();
-        request.setTitle(title);
-        request.setYear(year);
-        request.setSubjectId(subjectId);
+    UploadPyqRequest request = new UploadPyqRequest();
 
-        return pyqService.uploadPyq(request, file);
-    }
+    request.setTitle(title);
+    request.setYear(Integer.parseInt(year));
+    request.setSubjectId(Long.parseLong(subjectId));
 
-    @GetMapping
-    public List<Pyq> getAllPyqs() {
-        return pyqService.getAllPyqs();
-    }
-
+    return pyqService.uploadPyq(request, file);
+}
+   
     // NEW API
     @GetMapping("/subject/{subjectId}")
     public List<Pyq> getPyqsBySubject(@PathVariable Long subjectId) {
