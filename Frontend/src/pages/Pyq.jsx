@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 import API from "../services/api";
 
 function Pyq() {
 
   const { subjectId } = useParams();
+  const navigate = useNavigate();
 
   const [pyqs, setPyqs] = useState([]);
   const [search, setSearch] = useState("");
@@ -13,6 +14,11 @@ function Pyq() {
   const [loading, setLoading] = useState(true);
 
   const BACKEND_URL = "https://campuspyq-1.onrender.com";
+
+  // Breadcrumb information
+  const breadcrumbData = JSON.parse(
+    sessionStorage.getItem(`breadcrumb_${subjectId}`) || "{}"
+  );
 
   useEffect(() => {
 
@@ -50,7 +56,66 @@ function Pyq() {
 
     <div className="page">
 
+      {/* BACK BUTTON */}
+
+      <button
+        className="back-btn"
+        onClick={() => navigate(-1)}
+      >
+        ← Back
+      </button>
+
+
+      {/* BREADCRUMB */}
+
+      <div className="breadcrumb">
+
+        <span
+          className="breadcrumb-link"
+          onClick={() => navigate("/branches")}
+        >
+          🎓 {breadcrumbData.branchName || "Branch"}
+        </span>
+
+        <span>›</span>
+
+        <span
+          className="breadcrumb-link"
+          onClick={() =>
+            navigate(
+              `/branches/${breadcrumbData.branchId}/semesters`
+            )
+          }
+        >
+          📖 Semester {breadcrumbData.semesterNumber || ""}
+        </span>
+
+        <span>›</span>
+
+        <span
+          className="breadcrumb-link"
+          onClick={() =>
+            navigate(
+              `/semesters/${breadcrumbData.semesterId}/subjects`
+            )
+          }
+        >
+          📚 {breadcrumbData.subjectName || "Subject"}
+        </span>
+
+        <span>›</span>
+
+        <strong>📄 PYQ</strong>
+
+      </div>
+
+
+      {/* PAGE TITLE */}
+
       <h1>📄 Previous Year Papers</h1>
+
+
+      {/* SEARCH */}
 
       <div className="search-box">
 
@@ -64,6 +129,9 @@ function Pyq() {
         />
 
       </div>
+
+
+      {/* YEAR FILTER */}
 
       <div
         style={{
@@ -85,34 +153,56 @@ function Pyq() {
           <option value="All">All</option>
 
           {years.map((y) => (
+
             <option key={y} value={y}>
               {y}
             </option>
+
           ))}
 
         </select>
 
       </div>
 
+
+      {/* LOADING */}
+
       {loading ? (
 
-        <div style={{ textAlign: "center", marginTop: "40px" }}>
+        <div
+          style={{
+            textAlign: "center",
+            marginTop: "40px",
+          }}
+        >
+
           <h3>⏳ Loading Question Papers...</h3>
+
         </div>
 
       ) : filtered.length === 0 ? (
 
+        /* EMPTY STATE */
+
         <div className="empty-state">
 
-          <div className="empty-icon">📂</div>
+          <div className="empty-icon">
+            📂
+          </div>
 
-          <h2>No Question Papers Available</h2>
+          <h2>
+            No Question Papers Available
+          </h2>
 
-          <p>Upload Coming Soon...</p>
+          <p>
+            Upload Coming Soon...
+          </p>
 
         </div>
 
       ) : (
+
+        /* PYQ CARDS */
 
         filtered.map((pyq) => (
 
@@ -121,7 +211,9 @@ function Pyq() {
             key={pyq.id}
           >
 
-            <h2>{pyq.title}</h2>
+            <h2>
+              {pyq.title}
+            </h2>
 
             <p>
               <b>Year :</b> {pyq.year}
@@ -129,22 +221,31 @@ function Pyq() {
 
             <div className="pyq-buttons">
 
+              {/* VIEW */}
+
               <a
                 href={`${BACKEND_URL}/api/pyqs/view/${pyq.id}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
+
                 <button className="view-btn">
                   👁 View PDF
                 </button>
+
               </a>
+
+
+              {/* DOWNLOAD */}
 
               <a
                 href={`${BACKEND_URL}/api/pyqs/download/${pyq.id}`}
               >
+
                 <button className="download-btn">
                   ⬇ Download PDF
                 </button>
+
               </a>
 
             </div>
