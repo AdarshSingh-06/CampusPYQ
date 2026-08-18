@@ -7,38 +7,58 @@ function Branch() {
   const navigate = useNavigate();
 
   const [branches, setBranches] = useState(() => {
-    const saved = localStorage.getItem("branches");
-
-    return saved ? JSON.parse(saved) : [];
+    try {
+      const saved = localStorage.getItem("branches");
+      return saved ? JSON.parse(saved) : [];
+    } catch (error) {
+      console.error("LocalStorage error:", error);
+      return [];
+    }
   });
 
   const [search, setSearch] = useState("");
 
+  // IMPORTANT:
+  // First time API data nahi hai to loading true rahega.
+  // Agar localStorage me data hai to loading false.
+  const [loading, setLoading] = useState(() => {
+    return !localStorage.getItem("branches");
+  });
+
   useEffect(() => {
-    // Agar cache me branches already hain
-    // to API call ki zarurat nahi hai
-    if (localStorage.getItem("branches")) {
+    const cachedBranches = localStorage.getItem("branches");
+
+    // Agar data already localStorage me hai
+    // to immediately show hoga.
+    if (cachedBranches) {
+      setLoading(false);
       return;
     }
 
-    // Background me branches fetch karo
+    // First visit -> API se data lao
     API.get("/branches")
       .then((response) => {
-        setBranches(response.data);
+        const data = response.data || [];
 
+        setBranches(data);
+
+        // Future visits ke liye save
         localStorage.setItem(
           "branches",
-          JSON.stringify(response.data)
+          JSON.stringify(data)
         );
       })
       .catch((error) => {
-        console.error("Branch loading error:", error);
+        console.error("Failed to load branches:", error);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
 
   const filteredBranches = branches.filter((branch) =>
     branch.branchName
-      .toLowerCase()
+      ?.toLowerCase()
       .includes(search.toLowerCase())
   );
 
@@ -46,7 +66,6 @@ function Branch() {
     <div className="page">
 
       {/* BACK BUTTON */}
-
       <button
         className="back-btn"
         onClick={() => navigate(-1)}
@@ -54,14 +73,10 @@ function Branch() {
         ← Back
       </button>
 
-
       {/* TITLE */}
-
       <h1>🎓 Select Your Branch</h1>
 
-
       {/* SEARCH */}
-
       <div className="search-box">
 
         <FaSearch className="search-icon" />
@@ -70,22 +85,44 @@ function Branch() {
           type="text"
           placeholder="Search Branch..."
           value={search}
-          onChange={(e) =>
-            setSearch(e.target.value)
-          }
+          onChange={(e) => setSearch(e.target.value)}
         />
 
       </div>
 
+      {/* LOADING */}
+      {loading ? (
 
-      {/* BRANCH LIST */}
+        <div className="loading-state">
 
-      {filteredBranches.length === 0 ? (
+          <div className="loading-spinner"></div>
 
-        <p>No Branch Found</p>
+          <h3>Loading Branches...</h3>
+
+        </div>
+
+      ) : filteredBranches.length === 0 ? (
+
+        /* EMPTY STATE */
+        <div className="empty-state">
+
+          <div className="empty-icon">
+            📂
+          </div>
+
+          <h2>
+            No Branch Found
+          </h2>
+
+          <p>
+            No branches are available right now.
+          </p>
+
+        </div>
 
       ) : (
 
+        /* BRANCH LIST */
         filteredBranches.map((branch) => (
 
           <div
@@ -119,7 +156,6 @@ function Branch() {
           </div>
 
         ))
-
       )}
 
     </div>

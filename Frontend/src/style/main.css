@@ -2842,3 +2842,70 @@ transform:translateY(-3px);
     }
 
 }
+/* =================================
+      BRANCH LOADING
+================================= */
+
+.loading-state {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    margin-top: 50px;
+    padding: 50px 20px;
+
+    text-align: center;
+}
+
+.loading-state h3 {
+    margin-top: 18px;
+    color: #6b7280;
+    font-size: 18px;
+}
+
+
+/* Loading Spinner */
+
+.loading-spinner {
+    width: 45px;
+    height: 45px;
+
+    border: 5px solid #e5e7eb;
+    border-top: 5px solid #2563eb;
+
+    border-radius: 50%;
+
+    animation: branchSpin 0.8s linear infinite;
+}
+
+@keyframes branchSpin {
+
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+
+/* =================================
+      MOBILE BRANCH
+================================= */
+
+@media (max-width: 600px) {
+
+    .branch-card {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .loading-state {
+        margin-top: 30px;
+        padding: 40px 15px;
+    }
+
+}
