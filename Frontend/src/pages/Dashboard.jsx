@@ -1,89 +1,187 @@
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
 import {
-  FaCodeBranch,
-  FaBook,
-  FaFolder,
-  FaFilePdf,
-  FaArrowRight
+    FaCodeBranch,
+    FaBook,
+    FaFolder,
+    FaFilePdf,
+    FaArrowRight
 } from "react-icons/fa";
+
+import Sidebar from "../components/Sidebar";
+import Topbar from "../components/Topbar";
+
+import { useEffect } from "react";
 
 function Dashboard() {
 
-  useEffect(() => {
-    sessionStorage.setItem("lastPage", "/dashboard");
-  }, []);
+    useEffect(() => {
 
-  return (
-    <div className="dashboard-page">
+        sessionStorage.setItem(
+            "lastPage",
+            "/dashboard"
+        );
 
-      <div className="dashboard-header">
-        <h1>Admin Dashboard</h1>
-        <p>Manage your Campus PYQ platform from one place.</p>
-      </div>
+    }, []);
 
-      <div className="dashboard-grid">
 
-        <Link to="/manage-branch" className="dashboard-card">
-          <div className="dashboard-icon">
-            <FaCodeBranch />
-          </div>
+    return (
 
-          <h2>Branches</h2>
+        <div className="admin-container">
 
-          <p>Manage all branches.</p>
+            {/* =========================
+                SIDEBAR
+            ========================= */}
 
-          <span>
-            Open <FaArrowRight />
-          </span>
-        </Link>
+            <Sidebar />
 
-        <Link to="/manage-semester" className="dashboard-card">
-          <div className="dashboard-icon">
-            <FaBook />
-          </div>
 
-          <h2>Semesters</h2>
+            {/* =========================
+                MAIN CONTENT
+            ========================= */}
 
-          <p>Manage semesters.</p>
+            <div className="content">
 
-          <span>
-            Open <FaArrowRight />
-          </span>
-        </Link>
+                <Topbar />
 
-        <Link to="/manage-subject" className="dashboard-card">
-          <div className="dashboard-icon">
-            <FaFolder />
-          </div>
+                <div className="dashboard-page">
 
-          <h2>Subjects</h2>
+                    {/* HEADER */}
 
-          <p>Manage subjects.</p>
+                    <div className="dashboard-header">
 
-          <span>
-            Open <FaArrowRight />
-          </span>
-        </Link>
+                        <h1>
+                            Admin Dashboard
+                        </h1>
 
-        <Link to="/manage-pyq" className="dashboard-card">
-          <div className="dashboard-icon">
-            <FaFilePdf />
-          </div>
+                        <p>
+                            Manage your Campus PYQ platform from one place.
+                        </p>
 
-          <h2>PYQs</h2>
+                    </div>
 
-          <p>Upload & manage papers.</p>
 
-          <span>
-            Open <FaArrowRight />
-          </span>
-        </Link>
+                    {/* DASHBOARD CARDS */}
 
-      </div>
+                    <div className="dashboard-grid">
 
-    </div>
-  );
+
+                        {/* BRANCH */}
+
+                        <Link
+                            to="/manage-branch"
+                            className="dashboard-card"
+                        >
+
+                            <div className="dashboard-icon">
+                                <FaCodeBranch />
+                            </div>
+
+                            <h2>
+                                Branches
+                            </h2>
+
+                            <p>
+                                Manage all branches.
+                            </p>
+
+                            <span>
+                                Open
+                                <FaArrowRight />
+                            </span>
+
+                        </Link>
+
+
+                        {/* SEMESTER */}
+
+                        <Link
+                            to="/manage-semester"
+                            className="dashboard-card"
+                        >
+
+                            <div className="dashboard-icon">
+                                <FaBook />
+                            </div>
+
+                            <h2>
+                                Semesters
+                            </h2>
+
+                            <p>
+                                Manage semesters.
+                            </p>
+
+                            <span>
+                                Open
+                                <FaArrowRight />
+                            </span>
+
+                        </Link>
+
+
+                        {/* SUBJECT */}
+
+                        <Link
+                            to="/manage-subject"
+                            className="dashboard-card"
+                        >
+
+                            <div className="dashboard-icon">
+                                <FaFolder />
+                            </div>
+
+                            <h2>
+                                Subjects
+                            </h2>
+
+                            <p>
+                                Manage subjects.
+                            </p>
+
+                            <span>
+                                Open
+                                <FaArrowRight />
+                            </span>
+
+                        </Link>
+
+
+                        {/* PYQ */}
+
+                        <Link
+                            to="/manage-pyq"
+                            className="dashboard-card"
+                        >
+
+                            <div className="dashboard-icon">
+                                <FaFilePdf />
+                            </div>
+
+                            <h2>
+                                PYQs
+                            </h2>
+
+                            <p>
+                                Upload & manage papers.
+                            </p>
+
+                            <span>
+                                Open
+                                <FaArrowRight />
+                            </span>
+
+                        </Link>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    );
+
 }
 
 export default Dashboard;

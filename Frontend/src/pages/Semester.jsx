@@ -8,40 +8,44 @@ function Semester() {
   const navigate = useNavigate();
 
   const branches = JSON.parse(
-    sessionStorage.getItem("branches") || "[]"
+    localStorage.getItem("branches") || "[]"
   );
 
   const currentBranch = branches.find(
-    (branch) => String(branch.id) === String(branchId)
+    (branch) =>
+      String(branch.id) === String(branchId)
   );
 
+  const cacheKey = `semesters_${branchId}`;
+
   const [semesters, setSemesters] = useState(() => {
-    const saved = sessionStorage.getItem(
-      `semesters_${branchId}`
-    );
+    const saved = localStorage.getItem(cacheKey);
 
     return saved ? JSON.parse(saved) : [];
   });
 
   const [search, setSearch] = useState("");
 
-  const [loading, setLoading] = useState(
-    semesters.length === 0
-  );
+  const [loading, setLoading] = useState(() => {
+    return !localStorage.getItem(cacheKey);
+  });
 
   useEffect(() => {
-    if (semesters.length > 0) {
+
+    if (localStorage.getItem(cacheKey)) {
       return;
     }
 
     API.get(`/semesters/branch/${branchId}`)
       .then((res) => {
+
         setSemesters(res.data);
 
-        sessionStorage.setItem(
-          `semesters_${branchId}`,
+        localStorage.setItem(
+          cacheKey,
           JSON.stringify(res.data)
         );
+
       })
       .catch((err) => {
         console.error(err);
@@ -49,23 +53,26 @@ function Semester() {
       .finally(() => {
         setLoading(false);
       });
-  }, [branchId, semesters.length]);
 
-  const filtered = semesters.filter((s) =>
-    String(s.semesterNumber).includes(search)
+  }, [branchId, cacheKey]);
+
+  const filtered = semesters.filter((semester) =>
+    String(semester.semesterNumber)
+      .includes(search)
   );
 
   return (
     <div className="page">
-      <button
-  className="back-btn"
-  onClick={() => navigate(-1)}
->
-  ← Back
-</button>
 
-      {/* BREADCRUMB */}
+      <button
+        className="back-btn"
+        onClick={() => navigate(-1)}
+      >
+        ← Back
+      </button>
+
       <div className="breadcrumb">
+
         <span
           onClick={() => navigate("/branches")}
           className="breadcrumb-link"
@@ -78,45 +85,69 @@ function Semester() {
         <strong>
           {currentBranch?.branchName || "Branch"}
         </strong>
+
       </div>
 
       <h1>📖 Select Semester</h1>
 
       <div className="search-box">
+
         <FaSearch className="search-icon" />
 
         <input
           type="text"
           placeholder="Search Semester..."
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) =>
+            setSearch(e.target.value)
+          }
         />
+
       </div>
 
       {loading ? (
-        <div style={{ textAlign: "center", marginTop: "40px" }}>
+
+        <div
+          style={{
+            textAlign: "center",
+            marginTop: "40px"
+          }}
+        >
           <h3>⏳ Loading Semesters...</h3>
         </div>
+
       ) : filtered.length === 0 ? (
+
         <p>No Semester Found</p>
+
       ) : (
+
         filtered.map((semester) => (
+
           <div
             className="card fade"
             key={semester.id}
-           onClick={() => {
-  navigate(`/semesters/${semester.id}/subjects`);
-}}
+            onClick={() =>
+              navigate(
+                `/semesters/${semester.id}/subjects`
+              )
+            }
           >
+
             <h2>
               Semester {semester.semesterNumber}
             </h2>
 
             <span></span>
 
-            <p>Click to View Subjects →</p>
+            <p>
+              Click to View Subjects →
+            </p>
+
           </div>
+
         ))
+
       )}
 
     </div>

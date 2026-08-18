@@ -1536,3 +1536,1309 @@ transform:translateY(-3px);
   }
 
 }
+/* =========================================
+   ADMIN DASHBOARD - MOBILE RESPONSIVE
+========================================= */
+
+.admin-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Desktop */
+.content {
+  flex: 1;
+  margin-left: 280px;
+  padding: 40px;
+  min-width: 0;
+}
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 900px) {
+
+  .content {
+    margin-left: 0;
+    padding: 25px 20px;
+  }
+
+  .page-title {
+    font-size: 34px;
+  }
+
+  .input-group {
+    gap: 12px;
+  }
+
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+
+  .admin-container {
+    display: block;
+    min-height: 100vh;
+  }
+
+  /* Content full width */
+  .content {
+    width: 100%;
+    margin-left: 0;
+    padding: 20px 15px;
+    box-sizing: border-box;
+  }
+
+  /* Page title */
+  .page-title {
+    font-size: 28px;
+    line-height: 1.2;
+    margin-bottom: 20px;
+  }
+
+  /* Top card */
+  .top-card {
+    padding: 20px 15px;
+    border-radius: 18px;
+    margin-bottom: 25px;
+  }
+
+  /* Inputs */
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .input-group input,
+  .input-group select {
+    width: 100%;
+    box-sizing: border-box;
+    flex: none;
+    padding: 13px 15px;
+    font-size: 15px;
+  }
+
+  /* Buttons */
+  .primary-btn {
+    width: 100%;
+    padding: 13px 20px;
+    font-size: 15px;
+  }
+
+  /* Cards */
+  .list-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .list-card {
+    padding: 20px 16px;
+    border-radius: 18px;
+  }
+
+  .list-card h3 {
+    font-size: 22px;
+  }
+
+  .delete-btn {
+    width: 100%;
+    padding: 11px 18px;
+  }
+
+}
+/* =====================================================
+   ADMIN SIDEBAR - DESKTOP
+===================================================== */
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 280px;
+    height: 100vh;
+
+    box-sizing: border-box;
+
+    background: linear-gradient(
+        180deg,
+        #0f172a,
+        #1e3a8a,
+        #2563eb
+    );
+
+    color: white;
+
+    padding: 30px 20px;
+
+    display: flex;
+    flex-direction: column;
+
+    z-index: 9999;
+
+    box-shadow: 8px 0 30px rgba(15, 23, 42, 0.20);
+}
+
+/* Sidebar Title */
+
+.sidebar h2 {
+    font-size: 28px;
+    text-align: center;
+
+    margin: 0 0 35px;
+
+    color: white;
+}
+
+/* Sidebar Links */
+
+.sidebar a {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 14px 16px;
+
+    margin-bottom: 8px;
+
+    border-radius: 12px;
+
+    text-decoration: none;
+
+    color: #e2e8f0;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    transition: all 0.3s ease;
+}
+
+/* Icons */
+
+.sidebar a svg {
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+/* Hover */
+
+.sidebar a:hover {
+    background: rgba(255, 255, 255, 0.15);
+
+    color: white;
+
+    transform: translateX(5px);
+}
+
+/* Logout */
+
+.sidebar .logout-btn {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    width: 100%;
+
+    margin-top: auto;
+
+    padding: 14px 16px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: rgba(239, 68, 68, 0.9);
+
+    color: white;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all 0.3s ease;
+}
+
+.sidebar .logout-btn:hover {
+    background: #dc2626;
+
+    transform: translateX(5px);
+}
+
+
+/* =====================================================
+   ADMIN CONTENT
+===================================================== */
+
+.admin-container {
+    min-height: 100vh;
+}
+
+.admin-container .content {
+    margin-left: 280px;
+
+    min-height: 100vh;
+
+    box-sizing: border-box;
+
+    padding: 40px;
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 900px) {
+
+    .sidebar {
+        width: 220px;
+        padding: 25px 14px;
+    }
+
+    .sidebar h2 {
+        font-size: 23px;
+        margin-bottom: 25px;
+    }
+
+    .sidebar a {
+        padding: 12px;
+        font-size: 14px;
+        gap: 10px;
+    }
+
+    .sidebar .logout-btn {
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    .admin-container .content {
+        margin-left: 220px;
+        padding: 25px 20px;
+    }
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+
+    .admin-container {
+        display: block;
+
+        width: 100%;
+
+        min-height: 100vh;
+    }
+
+
+    /* Sidebar becomes normal top navigation */
+
+    .sidebar {
+        position: relative;
+
+        top: auto;
+        left: auto;
+
+        width: 100%;
+        height: auto;
+
+        min-height: auto;
+
+        padding: 15px 12px;
+
+        box-sizing: border-box;
+
+        display: block;
+
+        border-radius: 0;
+    }
+
+
+    /* Sidebar title */
+
+    .sidebar h2 {
+        font-size: 23px;
+
+        margin: 5px 0 15px;
+
+        text-align: center;
+    }
+
+
+    /* Links */
+
+    .sidebar a {
+        display: inline-flex;
+
+        width: auto;
+
+        padding: 9px 11px;
+
+        margin: 3px;
+
+        border-radius: 10px;
+
+        font-size: 13px;
+
+        gap: 7px;
+
+        vertical-align: middle;
+    }
+
+
+    .sidebar a svg {
+        font-size: 15px;
+    }
+
+
+    /* Logout */
+
+    .sidebar .logout-btn {
+        display: inline-flex;
+
+        width: auto;
+
+        margin: 3px;
+
+        padding: 9px 11px;
+
+        border-radius: 10px;
+
+        font-size: 13px;
+
+        gap: 7px;
+
+        vertical-align: middle;
+    }
+
+
+    /* Content */
+
+    .admin-container .content {
+        width: 100%;
+
+        margin-left: 0;
+
+        padding: 20px 14px;
+
+        box-sizing: border-box;
+    }
+
+}
+
+
+/* =====================================================
+   VERY SMALL MOBILE
+===================================================== */
+
+@media (max-width: 380px) {
+
+    .sidebar {
+        padding: 12px 8px;
+    }
+
+    .sidebar h2 {
+        font-size: 21px;
+    }
+
+    .sidebar a,
+    .sidebar .logout-btn {
+        padding: 8px 9px;
+
+        font-size: 12px;
+
+        gap: 5px;
+    }
+
+    .sidebar a svg,
+    .sidebar .logout-btn svg {
+        font-size: 13px;
+    }
+
+}
+/* =========================================================
+   ADMIN DASHBOARD - MOBILE RESPONSIVE FIX
+========================================================= */
+
+/* Dashboard main area */
+
+.dashboard-page {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+/* Dashboard Header */
+
+.dashboard-header {
+    margin-bottom: 30px;
+}
+
+.dashboard-header h1 {
+    margin: 0 0 8px;
+    font-size: 38px;
+    color: #111827;
+}
+
+.dashboard-header p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 17px;
+}
+
+
+/* Dashboard Grid */
+
+.dashboard-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 25px;
+
+    width: 100%;
+}
+
+
+/* Dashboard Card */
+
+.dashboard-card {
+    position: relative;
+
+    min-width: 0;
+
+    box-sizing: border-box;
+
+    padding: 30px;
+
+    background: white;
+
+    border-radius: 22px;
+
+    text-decoration: none;
+
+    color: #111827;
+
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+
+    transition: all 0.35s ease;
+
+    overflow: hidden;
+}
+
+
+.dashboard-card:hover {
+    transform: translateY(-8px);
+
+    box-shadow:
+        0 20px 45px rgba(37, 99, 235, 0.18);
+}
+
+
+/* Dashboard Icon */
+
+.dashboard-icon {
+    width: 60px;
+    height: 60px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 16px;
+
+    background: linear-gradient(
+        135deg,
+        #2563eb,
+        #7c3aed
+    );
+
+    color: white;
+
+    font-size: 27px;
+
+    margin-bottom: 20px;
+}
+
+
+.dashboard-card h2 {
+    margin: 0 0 8px;
+
+    font-size: 25px;
+}
+
+
+.dashboard-card p {
+    margin: 0 0 20px;
+
+    color: #6b7280;
+
+    font-size: 15px;
+}
+
+
+.dashboard-card span {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    color: #2563eb;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .dashboard-header h1 {
+        font-size: 32px;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+        gap: 18px;
+    }
+
+    .dashboard-card {
+        padding: 24px;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    /* Admin container */
+
+    .admin-container {
+        display: block;
+
+        width: 100%;
+
+        min-height: 100vh;
+    }
+
+
+    /* Sidebar */
+
+    .sidebar {
+        position: relative;
+
+        width: 100%;
+        height: auto;
+
+        min-height: auto;
+
+        margin: 0;
+
+        padding: 14px 10px;
+
+        box-sizing: border-box;
+    }
+
+
+    /* Sidebar title */
+
+    .sidebar h2 {
+        font-size: 22px;
+
+        margin: 4px 0 12px;
+
+        text-align: center;
+    }
+
+
+    /* Sidebar links */
+
+    .sidebar a {
+        display: inline-flex;
+
+        width: auto;
+
+        margin: 3px;
+
+        padding: 9px 10px;
+
+        font-size: 12px;
+
+        gap: 6px;
+    }
+
+
+    .sidebar a svg {
+        font-size: 14px;
+    }
+
+
+    /* Logout */
+
+    .sidebar .logout-btn {
+        display: inline-flex;
+
+        width: auto;
+
+        margin: 3px;
+
+        padding: 9px 10px;
+
+        font-size: 12px;
+
+        gap: 6px;
+    }
+
+
+    /* Content */
+
+    .admin-container .content {
+
+        width: 100%;
+
+        margin-left: 0;
+
+        padding: 18px 12px;
+
+        box-sizing: border-box;
+
+        overflow-x: hidden;
+    }
+
+
+    /* Dashboard */
+
+    .dashboard-page {
+        width: 100%;
+
+        box-sizing: border-box;
+    }
+
+
+    /* Header */
+
+    .dashboard-header {
+        margin-bottom: 20px;
+
+        text-align: center;
+    }
+
+
+    .dashboard-header h1 {
+        font-size: 28px;
+
+        line-height: 1.2;
+
+        margin-bottom: 8px;
+    }
+
+
+    .dashboard-header p {
+        font-size: 14px;
+
+        line-height: 22px;
+    }
+
+
+    /* IMPORTANT:
+       Two cards per row on mobile
+    */
+
+    .dashboard-grid {
+
+        width: 100%;
+
+        display: grid;
+
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+        gap: 12px;
+
+        box-sizing: border-box;
+    }
+
+
+    /* Cards */
+
+    .dashboard-card {
+
+        width: 100%;
+
+        min-width: 0;
+
+        padding: 18px 14px;
+
+        border-radius: 17px;
+
+        box-sizing: border-box;
+    }
+
+
+    .dashboard-card:hover {
+        transform: translateY(-4px);
+    }
+
+
+    /* Icons */
+
+    .dashboard-icon {
+
+        width: 45px;
+        height: 45px;
+
+        border-radius: 12px;
+
+        font-size: 20px;
+
+        margin-bottom: 13px;
+    }
+
+
+    /* Card title */
+
+    .dashboard-card h2 {
+
+        font-size: 17px;
+
+        line-height: 1.3;
+
+        margin-bottom: 6px;
+    }
+
+
+    /* Card description */
+
+    .dashboard-card p {
+
+        font-size: 12px;
+
+        line-height: 17px;
+
+        margin-bottom: 13px;
+    }
+
+
+    /* Open */
+
+    .dashboard-card span {
+
+        font-size: 12px;
+
+        gap: 5px;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL PHONES
+========================================================= */
+
+@media (max-width: 380px) {
+
+    .admin-container .content {
+        padding: 15px 9px;
+    }
+
+
+    .dashboard-header h1 {
+        font-size: 25px;
+    }
+
+
+    .dashboard-header p {
+        font-size: 13px;
+    }
+
+
+    .dashboard-grid {
+
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+        gap: 9px;
+    }
+
+
+    .dashboard-card {
+
+        padding: 15px 10px;
+
+        border-radius: 15px;
+    }
+
+
+    .dashboard-icon {
+
+        width: 40px;
+        height: 40px;
+
+        font-size: 18px;
+
+        margin-bottom: 10px;
+    }
+
+
+    .dashboard-card h2 {
+        font-size: 15px;
+    }
+
+
+    .dashboard-card p {
+        font-size: 11px;
+
+        line-height: 15px;
+    }
+
+
+    .dashboard-card span {
+        font-size: 11px;
+    }
+
+}
+/* =========================================================
+   FINAL ADMIN MOBILE FIX
+   IMPORTANT: KEEP THIS AT THE VERY END OF main.css
+========================================================= */
+
+@media screen and (max-width: 768px) {
+
+    /* ===============================
+       ADMIN CONTAINER
+    =============================== */
+
+    .admin-container {
+        display: block !important;
+
+        width: 100% !important;
+        min-width: 0 !important;
+
+        min-height: 100vh !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+
+        overflow-x: hidden !important;
+    }
+
+
+    /* ===============================
+       SIDEBAR
+       MOBILE = TOP NAVIGATION
+    =============================== */
+
+    .admin-container .sidebar {
+        position: relative !important;
+
+        top: auto !important;
+        left: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+
+        width: 100% !important;
+        max-width: 100% !important;
+
+        height: auto !important;
+        min-height: 0 !important;
+
+        margin: 0 !important;
+
+        padding: 12px 10px !important;
+
+        box-sizing: border-box !important;
+
+        display: flex !important;
+
+        flex-direction: row !important;
+
+        flex-wrap: wrap !important;
+
+        align-items: center !important;
+
+        justify-content: center !important;
+
+        gap: 4px !important;
+
+        overflow: visible !important;
+
+        z-index: 1000 !important;
+    }
+
+
+    /* Sidebar heading */
+
+    .admin-container .sidebar h2 {
+
+        width: 100% !important;
+
+        margin: 3px 0 10px !important;
+
+        padding: 0 !important;
+
+        text-align: center !important;
+
+        font-size: 22px !important;
+    }
+
+
+    /* Sidebar links */
+
+    .admin-container .sidebar a {
+
+        width: auto !important;
+        max-width: none !important;
+
+        margin: 2px !important;
+
+        padding: 8px 9px !important;
+
+        box-sizing: border-box !important;
+
+        display: inline-flex !important;
+
+        align-items: center !important;
+
+        justify-content: center !important;
+
+        gap: 5px !important;
+
+        font-size: 12px !important;
+
+        white-space: nowrap !important;
+
+        transform: none !important;
+    }
+
+
+    /* Sidebar icons */
+
+    .admin-container .sidebar a svg {
+
+        flex-shrink: 0 !important;
+
+        font-size: 14px !important;
+    }
+
+
+    /* Logout button */
+
+    .admin-container .sidebar .logout-btn {
+
+        width: auto !important;
+
+        max-width: none !important;
+
+        margin: 2px !important;
+
+        padding: 8px 9px !important;
+
+        box-sizing: border-box !important;
+
+        display: inline-flex !important;
+
+        align-items: center !important;
+
+        justify-content: center !important;
+
+        gap: 5px !important;
+
+        font-size: 12px !important;
+
+        white-space: nowrap !important;
+
+        transform: none !important;
+    }
+
+
+    /* ===============================
+       CONTENT
+       REMOVE DESKTOP SIDEBAR SPACE
+    =============================== */
+
+    .admin-container .content {
+
+        width: 100% !important;
+
+        max-width: 100% !important;
+
+        min-width: 0 !important;
+
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+
+        padding: 15px !important;
+
+        box-sizing: border-box !important;
+
+        overflow-x: hidden !important;
+    }
+
+
+    /* ===============================
+       TOPBAR
+    =============================== */
+
+    .admin-container .content .topbar {
+
+        width: 100% !important;
+
+        max-width: 100% !important;
+
+        box-sizing: border-box !important;
+    }
+
+
+    /* ===============================
+       DASHBOARD
+    =============================== */
+
+    .dashboard-page {
+
+        width: 100% !important;
+
+        max-width: 100% !important;
+
+        min-width: 0 !important;
+
+        margin: 0 !important;
+
+        padding: 0 !important;
+
+        box-sizing: border-box !important;
+    }
+
+
+    .dashboard-header {
+
+        width: 100% !important;
+
+        box-sizing: border-box !important;
+
+        text-align: center !important;
+
+        margin-bottom: 20px !important;
+    }
+
+
+    .dashboard-header h1 {
+
+        font-size: 28px !important;
+
+        line-height: 1.2 !important;
+
+        margin: 0 0 8px !important;
+    }
+
+
+    .dashboard-header p {
+
+        font-size: 14px !important;
+
+        line-height: 21px !important;
+
+        margin: 0 !important;
+    }
+
+
+    /* ===============================
+       DASHBOARD GRID
+    =============================== */
+
+    .dashboard-grid {
+
+        width: 100% !important;
+
+        max-width: 100% !important;
+
+        min-width: 0 !important;
+
+        display: grid !important;
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr)) !important;
+
+        gap: 12px !important;
+
+        box-sizing: border-box !important;
+    }
+
+
+    /* ===============================
+       DASHBOARD CARD
+    =============================== */
+
+    .dashboard-card {
+
+        width: 100% !important;
+
+        min-width: 0 !important;
+
+        max-width: 100% !important;
+
+        box-sizing: border-box !important;
+
+        padding: 17px 13px !important;
+
+        overflow: hidden !important;
+    }
+
+
+    .dashboard-icon {
+
+        width: 44px !important;
+        height: 44px !important;
+
+        font-size: 19px !important;
+
+        margin-bottom: 12px !important;
+    }
+
+
+    .dashboard-card h2 {
+
+        font-size: 17px !important;
+
+        line-height: 1.3 !important;
+
+        word-break: normal !important;
+    }
+
+
+    .dashboard-card p {
+
+        font-size: 12px !important;
+
+        line-height: 17px !important;
+    }
+
+
+    .dashboard-card span {
+
+        font-size: 12px !important;
+    }
+
+
+    /* ===============================
+       ADMIN FORMS / CARDS
+       MANAGE BRANCH / SUBJECT / PYQ
+    =============================== */
+
+    .content .top-card,
+    .content .list-card,
+    .content .card {
+
+        max-width: 100% !important;
+
+        box-sizing: border-box !important;
+
+        overflow-x: auto;
+    }
+
+
+    /* Input groups */
+
+    .input-group {
+
+        width: 100% !important;
+
+        box-sizing: border-box !important;
+
+        flex-direction: column !important;
+
+        gap: 12px !important;
+    }
+
+
+    .input-group input,
+    .input-group select {
+
+        width: 100% !important;
+
+        min-width: 0 !important;
+
+        box-sizing: border-box !important;
+
+        flex: none !important;
+    }
+
+
+    /* Lists */
+
+    .list-grid {
+
+        width: 100% !important;
+
+        grid-template-columns: 1fr !important;
+
+        gap: 15px !important;
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL PHONE
+========================================================= */
+
+@media screen and (max-width: 380px) {
+
+    .admin-container .sidebar {
+        padding: 10px 6px !important;
+    }
+
+
+    .admin-container .sidebar h2 {
+        font-size: 20px !important;
+    }
+
+
+    .admin-container .sidebar a,
+    .admin-container .sidebar .logout-btn {
+
+        padding: 7px 7px !important;
+
+        font-size: 11px !important;
+    }
+
+
+    .admin-container .content {
+        padding: 12px 10px !important;
+    }
+
+
+    .dashboard-grid {
+        gap: 9px !important;
+    }
+
+
+    .dashboard-card {
+        padding: 14px 9px !important;
+    }
+
+
+    .dashboard-card h2 {
+        font-size: 15px !important;
+    }
+
+}

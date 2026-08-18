@@ -4,37 +4,37 @@ import { FaSearch } from "react-icons/fa";
 import API from "../services/api";
 
 function Branch() {
+  const navigate = useNavigate();
+
   const [branches, setBranches] = useState(() => {
-    const saved = sessionStorage.getItem("branches");
+    const saved = localStorage.getItem("branches");
+
     return saved ? JSON.parse(saved) : [];
   });
 
   const [search, setSearch] = useState("");
-  const [loading, setLoading] = useState(branches.length === 0);
-
-  const navigate = useNavigate();
 
   useEffect(() => {
-    // Agar data already cache me hai to API call mat karo
-    if (branches.length > 0) {
+    // Agar cache me branches already hain
+    // to API call ki zarurat nahi hai
+    if (localStorage.getItem("branches")) {
       return;
     }
 
+    // Background me branches fetch karo
     API.get("/branches")
       .then((response) => {
         setBranches(response.data);
-        sessionStorage.setItem(
+
+        localStorage.setItem(
           "branches",
           JSON.stringify(response.data)
         );
       })
       .catch((error) => {
-        console.error(error);
-      })
-      .finally(() => {
-        setLoading(false);
+        console.error("Branch loading error:", error);
       });
-  }, [branches.length]);
+  }, []);
 
   const filteredBranches = branches.filter((branch) =>
     branch.branchName
@@ -44,50 +44,82 @@ function Branch() {
 
   return (
     <div className="page">
+
+      {/* BACK BUTTON */}
+
       <button
-  className="back-btn"
-  onClick={() => navigate(-1)}
->
-  ← Back
-</button>
+        className="back-btn"
+        onClick={() => navigate(-1)}
+      >
+        ← Back
+      </button>
+
+
+      {/* TITLE */}
 
       <h1>🎓 Select Your Branch</h1>
 
+
+      {/* SEARCH */}
+
       <div className="search-box">
+
         <FaSearch className="search-icon" />
 
         <input
           type="text"
           placeholder="Search Branch..."
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) =>
+            setSearch(e.target.value)
+          }
         />
+
       </div>
 
-      {loading ? (
-        <div style={{ textAlign: "center", marginTop: "40px" }}>
-          <h3>⏳ Loading Branches...</h3>
-        </div>
-      ) : filteredBranches.length === 0 ? (
+
+      {/* BRANCH LIST */}
+
+      {filteredBranches.length === 0 ? (
+
         <p>No Branch Found</p>
+
       ) : (
+
         filteredBranches.map((branch) => (
+
           <div
             key={branch.id}
             className="card branch-card fade"
             onClick={() =>
-              navigate(`/branches/${branch.id}/semesters`)
+              navigate(
+                `/branches/${branch.id}/semesters`
+              )
             }
           >
+
             <div>
-              <h2>{branch.branchName}</h2>
+
+              <h2>
+                {branch.branchName}
+              </h2>
+
               <span></span>
-              <p>View Semester Papers →</p>
+
+              <p>
+                View Semester Papers →
+              </p>
+
             </div>
 
-            <span>📚</span>
+            <span>
+              📚
+            </span>
+
           </div>
+
         ))
+
       )}
 
     </div>

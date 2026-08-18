@@ -29,25 +29,25 @@ function Navbar() {
 
       <Link to="/" className="logo">
         <FaGraduationCap />
-        <span>Campus PYQ</span>
+        <span><h1>Campus PYQ</h1></span>
       </Link>
 
       <div className="nav-links">
 
         <Link to="/">
           <FaHome />
-          Home
+          <h3>Home</h3>
         </Link>
 
         <Link to="/branches">
-          📚 Branches
+           <h3>📚 Branches</h3>
         </Link>
 
        <button
   onClick={handleAdminClick}
   className="admin-link"
 >
-  Admin
+   <h3> 🙎Admin</h3>
 </button>
 
       </div>

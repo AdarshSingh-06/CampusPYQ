@@ -8,45 +8,87 @@ function Pyq() {
   const { subjectId } = useParams();
   const navigate = useNavigate();
 
-  const [pyqs, setPyqs] = useState([]);
+  const BACKEND_URL =
+    "https://campuspyq-1.onrender.com";
+
+  const cacheKey = `pyqs_${subjectId}`;
+
+  const [pyqs, setPyqs] = useState(() => {
+
+    const saved =
+      localStorage.getItem(cacheKey);
+
+    return saved
+      ? JSON.parse(saved)
+      : [];
+  });
+
   const [search, setSearch] = useState("");
+
   const [year, setYear] = useState("All");
-  const [loading, setLoading] = useState(true);
 
-  const BACKEND_URL = "https://campuspyq-1.onrender.com";
+  const [loading, setLoading] = useState(() => {
 
-  // Breadcrumb information
+    return !localStorage.getItem(cacheKey);
+
+  });
+
   const breadcrumbData = JSON.parse(
-    sessionStorage.getItem(`breadcrumb_${subjectId}`) || "{}"
+    sessionStorage.getItem(
+      `breadcrumb_${subjectId}`
+    ) || "{}"
   );
 
   useEffect(() => {
+
+    if (localStorage.getItem(cacheKey)) {
+      return;
+    }
 
     setLoading(true);
 
     API.get(`/pyqs/subject/${subjectId}`)
       .then((res) => {
+
         setPyqs(res.data);
+
+        localStorage.setItem(
+          cacheKey,
+          JSON.stringify(res.data)
+        );
+
       })
       .catch((err) => {
+
         console.error(err);
+
       })
       .finally(() => {
+
         setLoading(false);
+
       });
 
-  }, [subjectId]);
+  }, [subjectId, cacheKey]);
 
-  const years = [...new Set(pyqs.map((p) => p.year))];
+  const years = [
+    ...new Set(
+      pyqs.map((p) => p.year)
+    )
+  ];
 
   const filtered = pyqs.filter((pyq) => {
 
-    const matchTitle = pyq.title
-      .toLowerCase()
-      .includes(search.toLowerCase());
+    const matchTitle =
+      pyq.title
+        .toLowerCase()
+        .includes(
+          search.toLowerCase()
+        );
 
     const matchYear =
-      year === "All" || pyq.year === Number(year);
+      year === "All" ||
+      pyq.year === Number(year);
 
     return matchTitle && matchYear;
 
@@ -56,8 +98,6 @@ function Pyq() {
 
     <div className="page">
 
-      {/* BACK BUTTON */}
-
       <button
         className="back-btn"
         onClick={() => navigate(-1)}
@@ -65,16 +105,17 @@ function Pyq() {
         ← Back
       </button>
 
-
-      {/* BREADCRUMB */}
-
       <div className="breadcrumb">
 
         <span
           className="breadcrumb-link"
-          onClick={() => navigate("/branches")}
+          onClick={() =>
+            navigate("/branches")
+          }
         >
-          🎓 {breadcrumbData.branchName || "Branch"}
+          🎓{" "}
+          {breadcrumbData.branchName ||
+            "Branch"}
         </span>
 
         <span>›</span>
@@ -87,7 +128,9 @@ function Pyq() {
             )
           }
         >
-          📖 Semester {breadcrumbData.semesterNumber || ""}
+          📖 Semester{" "}
+          {breadcrumbData.semesterNumber ||
+            ""}
         </span>
 
         <span>›</span>
@@ -100,22 +143,22 @@ function Pyq() {
             )
           }
         >
-          📚 {breadcrumbData.subjectName || "Subject"}
+          📚{" "}
+          {breadcrumbData.subjectName ||
+            "Subject"}
         </span>
 
         <span>›</span>
 
-        <strong>📄 PYQ</strong>
+        <strong>
+          📄 PYQ
+        </strong>
 
       </div>
 
-
-      {/* PAGE TITLE */}
-
-      <h1>📄 Previous Year Papers</h1>
-
-
-      {/* SEARCH */}
+      <h1>
+        📄 Previous Year Papers
+      </h1>
 
       <div className="search-box">
 
@@ -125,36 +168,42 @@ function Pyq() {
           type="text"
           placeholder="Search Paper..."
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) =>
+            setSearch(e.target.value)
+          }
         />
 
       </div>
 
-
-      {/* YEAR FILTER */}
-
       <div
         style={{
           textAlign: "center",
-          marginBottom: "25px",
+          marginBottom: "25px"
         }}
       >
 
         <select
           value={year}
-          onChange={(e) => setYear(e.target.value)}
+          onChange={(e) =>
+            setYear(e.target.value)
+          }
           style={{
             padding: "12px",
             borderRadius: "8px",
-            fontSize: "16px",
+            fontSize: "16px"
           }}
         >
 
-          <option value="All">All</option>
+          <option value="All">
+            All
+          </option>
 
           {years.map((y) => (
 
-            <option key={y} value={y}>
+            <option
+              key={y}
+              value={y}
+            >
               {y}
             </option>
 
@@ -164,25 +213,22 @@ function Pyq() {
 
       </div>
 
-
-      {/* LOADING */}
-
       {loading ? (
 
         <div
           style={{
             textAlign: "center",
-            marginTop: "40px",
+            marginTop: "40px"
           }}
         >
 
-          <h3>⏳ Loading Question Papers...</h3>
+          <h3>
+            ⏳ Loading Question Papers...
+          </h3>
 
         </div>
 
       ) : filtered.length === 0 ? (
-
-        /* EMPTY STATE */
 
         <div className="empty-state">
 
@@ -202,8 +248,6 @@ function Pyq() {
 
       ) : (
 
-        /* PYQ CARDS */
-
         filtered.map((pyq) => (
 
           <div
@@ -216,12 +260,11 @@ function Pyq() {
             </h2>
 
             <p>
-              <b>Year :</b> {pyq.year}
+              <b>Year :</b>{" "}
+              {pyq.year}
             </p>
 
             <div className="pyq-buttons">
-
-              {/* VIEW */}
 
               <a
                 href={`${BACKEND_URL}/api/pyqs/view/${pyq.id}`}
@@ -234,9 +277,6 @@ function Pyq() {
                 </button>
 
               </a>
-
-
-              {/* DOWNLOAD */}
 
               <a
                 href={`${BACKEND_URL}/api/pyqs/download/${pyq.id}`}
@@ -259,7 +299,6 @@ function Pyq() {
     </div>
 
   );
-
 }
 
 export default Pyq;
